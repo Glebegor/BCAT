@@ -7,9 +7,9 @@ namespace BCAT.Entities.Commons;
 
 public class Blockchain : IBlockchain
 {
-    static public int amount;
-    static public List<Block> chain = new List<Block>();
-    static public int countBlocks = 0;
+    public int amount;
+    public List<Block> chain = new List<Block>();
+    public int countBlocks = 0;
 
 
 
