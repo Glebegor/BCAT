@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using BCAT.Entities.Interfaces;
 using BCAT.Entities.Commons;
+using BCAT.Internal.Validators;
 
 namespace BCAT;
 
@@ -8,12 +9,23 @@ public class Program
 {
     public static void Main()
     {
-        InitTest();
+        Blockchain blockchain = new Blockchain();
+
+        InitTest(blockchain);
+        BlockchainValidator blockchainValidator = new BlockchainValidator();
+        
+        Console.WriteLine("Validating Blockchain...");
+        Console.WriteLine("Without changes->");
+        Console.WriteLine(BlockchainValidator.ValidateBlockchain(blockchain) ? "BLOCKCHAIN IS VALID" : "BLOCKCHAIN IS NOT VALID");
+        
+        Console.WriteLine("With changes->");
+        blockchain.chain[1].prevHash = "123";        
+        Console.WriteLine(BlockchainValidator.ValidateBlockchain(blockchain) ? "BLOCKCHAIN IS VALID" : "BLOCKCHAIN IS NOT VALID");
+
     }
 
-    static public void InitTest()
+    static public void InitTest(Blockchain blockchain)
     {
-        Blockchain blockchain = new Blockchain();
         
         Console.WriteLine("Creating Transaction 1...");
         Transaction transaction1 = new Transaction();
@@ -59,7 +71,7 @@ public class Program
         Console.WriteLine(jsonTransaction);
         Console.WriteLine(blockchain.chain[1].hash);
         Console.WriteLine(blockchain.chain[1].index);
-        Console.WriteLine(blockchain.chain[1].prevHash);
+        Console.WriteLine(blockchain.chain[1].prevHash + "\n");
     }
 }
 
