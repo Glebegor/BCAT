@@ -1,8 +1,10 @@
 
 
+using BCAT.Entities.Interfaces;
+
 namespace BCAT.Entities.Commons;
 
-public class Wallet
+public class Wallet : IWallet
 {
     public string username;
     public string email;
@@ -42,8 +44,14 @@ public class Wallet
         {
             return err;
         }
-
+        
         return "";
+    }
+
+    public string SerializerToJsonString()
+    {
+        string jsonString = $"{{ \"username\": \"{username}\", \"email\": \"{email}\", \"publicKey\": \"{publicKey}\", \"privateKey\": \"{privateKey}\", \"balance\": {balance}, \"id\": {id} }}";
+        return jsonString;
     }
 
 }
