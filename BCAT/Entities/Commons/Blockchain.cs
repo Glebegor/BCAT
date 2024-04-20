@@ -32,7 +32,7 @@ public class Blockchain : IBlockchain
         }
         else
         {
-            (string hash, string error) = CalculateHash(transaction, chain[-1].hash, countBlocks);
+            (string hash, string error) = CalculateHash(transaction, chain[chain.Count()-1].hash, countBlocks);
             if (error != "")
             {
                 return (null, error);
@@ -40,7 +40,7 @@ public class Blockchain : IBlockchain
             countBlocks++;
             amount += transaction.amount;
 
-            Block block = new Block(hash, chain[-1].hash, transaction, countBlocks);
+            Block block = new Block(hash, chain[chain.Count()-1].hash, transaction, countBlocks);
             chain.Add(block);
             return (block, "");
         }
