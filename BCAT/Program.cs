@@ -29,7 +29,7 @@ public class Program
             return;
         }
         
-        Console.WriteLine();
+        Console.WriteLine(jsonTransaction);
     }
 }
 
