@@ -19,10 +19,10 @@ public class Transaction : ITransaction
         return "";
     }
 
-    public (string, string) SerializerToJsonString()
+    public string SerializerToJsonString()
     {
         string jsonString = $"{{ \"sender\": \"{sender}\", \"receiver\": \"{receiver}\", \"amount\": {amount}, \"signature\": \"{signature}\", \"hash\": \"{hash}\" }}";
-        return (jsonString, "");
+        return jsonString;
     }
     
 }

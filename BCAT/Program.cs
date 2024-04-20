@@ -9,6 +9,7 @@ public class Program
 {
     public static void Main()
     {
+        // VERY BIG TEST
         Blockchain blockchain = new Blockchain();
 
         InitTest(blockchain);
@@ -21,6 +22,8 @@ public class Program
         Console.WriteLine("With changes->");
         blockchain.chain[1].prevHash = "123";        
         Console.WriteLine(BlockchainValidator.ValidateBlockchain(blockchain) ? "BLOCKCHAIN IS VALID" : "BLOCKCHAIN IS NOT VALID");
+        // END OF VERY BIG TEST
+
 
     }
 
@@ -38,17 +41,10 @@ public class Program
             return;
         }
 
-        (string jsonTransaction, err) = blockchain.chain[0].transaction.SerializerToJsonString();
-        if (err != "") 
-        {
-            Console.WriteLine(err);
-            return;
-        }
+        string jsonBlock = blockchain.chain[0].SerializerToJsonString();
+ 
         
-        Console.WriteLine(jsonTransaction);
-        Console.WriteLine(blockchain.chain[0].hash);
-        Console.WriteLine(blockchain.chain[0].index);
-        Console.WriteLine(blockchain.chain[0].prevHash);
+        Console.WriteLine(jsonBlock);
         
         Console.WriteLine("Creating Transaction 2...");
         Transaction transaction2 = new Transaction();
@@ -61,17 +57,11 @@ public class Program
             return;
         }
 
-        (jsonTransaction, err) = blockchain.chain[1].transaction.SerializerToJsonString();
-        if (err != "") 
-        {
-            Console.WriteLine(err);
-            return;
-        }
+        jsonBlock = blockchain.chain[1].SerializerToJsonString();
+
         
-        Console.WriteLine(jsonTransaction);
-        Console.WriteLine(blockchain.chain[1].hash);
-        Console.WriteLine(blockchain.chain[1].index);
-        Console.WriteLine(blockchain.chain[1].prevHash + "\n");
+        Console.WriteLine(jsonBlock + "\n");
+
     }
 }
 
