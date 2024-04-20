@@ -5,10 +5,9 @@ using System;
 
 namespace BCAT.Entities.Commons;
 
-public class Blockchain : IBlockchainInterface
+public class Blockchain : IBlockchain
 {
-    public int amount;
-    
+    static public int amount;
     static public List<Block> chain = new List<Block>();
     static public int countBlocks = 0;
 
@@ -24,6 +23,7 @@ public class Blockchain : IBlockchainInterface
                 return (null, error);
             }
             countBlocks++;
+            amount += transaction.amount;
             
             Block block = new Block(hash, "", transaction, 1);
             chain.Add(block);
@@ -38,6 +38,7 @@ public class Blockchain : IBlockchainInterface
                 return (null, error);
             }
             countBlocks++;
+            amount += transaction.amount;
 
             Block block = new Block(hash, chain[-1].hash, transaction, countBlocks);
             chain.Add(block);
