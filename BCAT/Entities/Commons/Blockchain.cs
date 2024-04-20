@@ -9,6 +9,7 @@ public class Blockchain : IBlockchain
 {
     public int amount;
     public List<Block> chain = new List<Block>();
+    public List<Wallet> wallets = new List<Wallet>();
     public int countBlocks = 0;
 
 
@@ -17,10 +18,10 @@ public class Blockchain : IBlockchain
     {
         if (countBlocks == 0)
         {
-            (string hash, string error) = CalculateHash(transaction, "", 0);
-            if (error != "")
+            (string hash, string err) = CalculateHash(transaction, "", 0);
+            if (err != "")
             {
-                return (null, error);
+                return (null, err);
             }
             countBlocks++;
             amount += transaction.amount;
@@ -32,10 +33,10 @@ public class Blockchain : IBlockchain
         }
         else
         {
-            (string hash, string error) = CalculateHash(transaction, chain[chain.Count()-1].hash, countBlocks);
-            if (error != "")
+            (string hash, string err) = CalculateHash(transaction, chain[chain.Count()-1].hash, countBlocks);
+            if (err != "")
             {
-                return (null, error);
+                return (null, err);
             }
             countBlocks++;
             amount += transaction.amount;
