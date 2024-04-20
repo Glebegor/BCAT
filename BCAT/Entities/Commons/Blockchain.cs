@@ -5,12 +5,11 @@ using System;
 
 namespace BCAT.Entities.Commons;
 
-public class Blockchain : IBlockchainInterface
+public class Blockchain : IBlockchain
 {
     public int amount;
-    
-    static public List<Block> chain = new List<Block>();
-    static public int countBlocks = 0;
+    public List<Block> chain = new List<Block>();
+    public int countBlocks = 0;
 
 
 
@@ -24,6 +23,7 @@ public class Blockchain : IBlockchainInterface
                 return (null, error);
             }
             countBlocks++;
+            amount += transaction.amount;
             
             Block block = new Block(hash, "", transaction, 1);
             chain.Add(block);
@@ -32,14 +32,15 @@ public class Blockchain : IBlockchainInterface
         }
         else
         {
-            (string hash, string error) = CalculateHash(transaction, chain[-1].hash, countBlocks);
+            (string hash, string error) = CalculateHash(transaction, chain[chain.Count()-1].hash, countBlocks);
             if (error != "")
             {
                 return (null, error);
             }
             countBlocks++;
+            amount += transaction.amount;
 
-            Block block = new Block(hash, chain[-1].hash, transaction, countBlocks);
+            Block block = new Block(hash, chain[chain.Count()-1].hash, transaction, countBlocks);
             chain.Add(block);
             return (block, "");
         }
