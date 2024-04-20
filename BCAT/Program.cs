@@ -30,37 +30,37 @@ public class Program
     static public void InitTest(Blockchain blockchain)
     {
         
-        Console.WriteLine("Creating Transaction 1...");
-        Transaction transaction1 = new Transaction();
-        transaction1.CreateTransaction("Alice_public", "Bob_public", 100, "PrivateKey_alice", "AliceHash");
-        
-        (_, string err) = blockchain.CreateBlock(transaction1);
-        if (err != "") 
-        {
-            Console.WriteLine(err);
-            return;
-        }
-
-        string jsonBlock = blockchain.chain[0].SerializerToJsonString();
- 
-        
-        Console.WriteLine(jsonBlock);
-        
-        Console.WriteLine("Creating Transaction 2...");
-        Transaction transaction2 = new Transaction();
-        transaction2.CreateTransaction("Bob_public", "Alice_public", 200, "PrivateKey_bob", "BobHash");
-        
-        (_, err) = blockchain.CreateBlock(transaction2);
-        if (err != "") 
-        {
-            Console.WriteLine(err);
-            return;
-        }
-
-        jsonBlock = blockchain.chain[1].SerializerToJsonString();
-
-        
-        Console.WriteLine(jsonBlock + "\n");
+        // Console.WriteLine("Creating Transaction 1...");
+        // Transaction transaction1 = new Transaction();
+        // transaction1.CreateTransaction("Alice_public", "Bob_public", 100, "PrivateKey_alice");
+        //
+        // (_, string err) = blockchain.CreateBlock(transaction1);
+        // if (err != "") 
+        // {
+        //     Console.WriteLine(err);
+        //     return;
+        // }
+        //
+        // string jsonBlock = blockchain.chain[0].SerializerToJsonString();
+        //
+        //
+        // Console.WriteLine(jsonBlock);
+        //
+        // Console.WriteLine("Creating Transaction 2...");
+        // Transaction transaction2 = new Transaction();
+        // transaction2.CreateTransaction("Bob_public", "Alice_public", 200, "PrivateKey_bob");
+        //
+        // (_, err) = blockchain.CreateBlock(transaction2);
+        // if (err != "") 
+        // {
+        //     Console.WriteLine(err);
+        //     return;
+        // }
+        //
+        // jsonBlock = blockchain.chain[1].SerializerToJsonString();
+        //
+        //
+        // Console.WriteLine(jsonBlock + "\n");
 
     }
 }
