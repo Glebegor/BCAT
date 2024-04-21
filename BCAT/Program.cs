@@ -24,7 +24,7 @@ public class Program
         // Client initialization
         App app = new App();
         App.SetClient();
-
+        App.client.Run();
 
     }
     
