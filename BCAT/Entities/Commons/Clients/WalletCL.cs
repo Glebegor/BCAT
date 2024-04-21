@@ -1,6 +1,6 @@
 namespace BCAT.Entities.Commons.Clients;
 
-public class Mining
+public class WalletCL
 {
     
 }

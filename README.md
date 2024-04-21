@@ -1,6 +1,14 @@
 # BCAT - Blockchain Anonymous Token
 
 ## Description
+BCAT has 6 "I"t will be":
+- It will be public blockchain.
+- It will be anonymous.
+- It will be fast.
+- It will be secure.
+- It will be scalable.
+- It will be decentralized.
+
 ## Environment
 ## Docs
 ### Stack
