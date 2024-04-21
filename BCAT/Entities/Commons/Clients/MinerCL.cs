@@ -1,6 +1,6 @@
 namespace BCAT.Entities.Commons.Clients;
 
-public class MiningCL : Client
+public class MinerCL : Client
 {
     public override void Run()
     {
