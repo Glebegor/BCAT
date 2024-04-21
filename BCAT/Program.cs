@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using BCAT.Bootstrap;
 using BCAT.Entities.Interfaces;
 using BCAT.Entities.Commons;
 using BCAT.Entities.Commons.Clients;
@@ -21,8 +22,9 @@ public class Program
         
         
         // Client initialization
-        Client client = new Client();
-        
+        App app = new App();
+        App.SetClient();
+
 
     }
     
