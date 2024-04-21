@@ -1,31 +1,11 @@
+using BCAT.Entities.Enums;
+
 namespace BCAT.Entities.Commons.Clients;
 
-public class Client
+public abstract class Client
 {
-    enum typeOfClient
-    {
-        Node,
-        MiningNode,
-        Miner,
-        Wallet
-    }
-    public Client()
-    {
-        string choiseStr;
-        int choise;
+    public string host;
+    public string port;
 
-        Console.WriteLine("Initializing Client...");
-        Console.WriteLine("1-Node \n2-Mining Node \n3-Miner \n4-Wallet");
-        Console.WriteLine("Choise your client type: ");
-        while (true) 
-        { 
-           choiseStr = Console.ReadLine();
-           choise = int.Parse(choiseStr);
-           if (choise < 5 && choise >= 0)
-           {
-               Console.WriteLine("You are " + (typeOfClient)choise);
-               break;
-           }
-        }
-    }
+    public abstract void Run();
 }
