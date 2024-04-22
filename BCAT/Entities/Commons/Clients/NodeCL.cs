@@ -29,6 +29,7 @@ public class NodeCL : Client
     }
     public override void Run()
     {
-        
+        Server server = new Server();
+        server.Start();
     }
 }
