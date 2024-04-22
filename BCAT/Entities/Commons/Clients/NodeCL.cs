@@ -1,3 +1,6 @@
+using System.Net.Http;
+
+
 namespace BCAT.Entities.Commons.Clients;
 
 public class NodeCL : Client
@@ -19,10 +22,14 @@ public class NodeCL : Client
 
     public void UpdateData()
     {
-        // Here need to be function that will update data from blockchain network
+        foreach (var nodeIp in nodesInNetwork)
+        {
+            
+        }
     }
     public override void Run()
     {
-        // Function to run server of the node
+        Server server = new Server();
+        server.Start();
     }
 }
