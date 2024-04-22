@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="api\" />
       <Folder Include="Logger\" />
     </ItemGroup>
 
