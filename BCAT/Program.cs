@@ -12,14 +12,7 @@ public class Program
     public static void Main()
     {
         // VERY BIG TEST
-        Blockchain blockchain = new Blockchain();
-
-        InitTest(blockchain);
-        
-        Console.WriteLine("Starting of the client.");
-        Console.WriteLine("Starting of the client.");
-        // END OF VERY BIG TEST
-        
+        InitTest();
         
         // Client initialization
         App app = new App();
@@ -29,8 +22,11 @@ public class Program
     }
     
 
-    static public void InitTest(Blockchain blockchain)
+    // Test of local simulation
+    static public void InitTest()
     {
+        Blockchain blockchain = new Blockchain();
+
         // Wallet tests
         Console.WriteLine("Creating Wallets...");
 

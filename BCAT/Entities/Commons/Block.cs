@@ -9,6 +9,7 @@ public class Block : IBlock
     public Transaction transaction;
     public int index;
     
+    // Creating of the block
     public Block(string hash, string prevHash, Transaction transaction, int index)
     {
         this.hash = hash;
@@ -17,6 +18,7 @@ public class Block : IBlock
         this.index = index;
     }
 
+    // Serializing block to json string
     public string SerializerToJsonString()
     {
         string jsonString = $"{{ \"hash\": \"{hash}\", \"prevHash\": \"{prevHash}\", \"index\": {index}, \"transaction\": {transaction.SerializerToJsonString()}, }}";
