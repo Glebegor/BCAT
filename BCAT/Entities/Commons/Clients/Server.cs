@@ -49,9 +49,9 @@ public class Server
         {
             while (httpListener.IsListening)
             {
-                HttpListenerContext ocntext = httpListener.GetContext();
+                HttpListenerContext context = httpListener.GetContext();
                 
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + ocntext.Request.Url);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url);
             }
         });
         Console.WriteLine("Press something to stop the server...");
