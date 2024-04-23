@@ -17,6 +17,30 @@ ANC has 6 "I't will be":
 - .NET Core
 
 ### API
+#### Requests/Responses
+All requests and responses will be in json format.
+
+##### Success request
+Status: 200
+```json
+{
+    "message": "Success",
+    "data": {
+        "key": "value"
+    }
+}
+```
+data can be not included.
+
+##### Success request
+Status: !200
+
+```json
+{
+  "message": "Error",
+  "error": "Error messsage"
+}
+```
 
 #### Node API
 #### NodeMining API
