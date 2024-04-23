@@ -8,6 +8,7 @@ public class Transaction : ITransaction
     public int amount;
     public string signature;
     
+    // Creating of the transaction
     public string CreateTransaction(string sender, string receiver, int amount, string signature)
     {
         this.sender = sender;
@@ -17,6 +18,7 @@ public class Transaction : ITransaction
         return "";
     }
 
+    // Serializing transaction to json string
     public string SerializerToJsonString()
     {
         string jsonString = $"{{ \"sender\": \"{sender}\", \"receiver\": \"{receiver}\", \"amount\": {amount}, \"signature\": \"{signature}\" }}";

@@ -17,6 +17,8 @@ public class Wallet : IWallet
     public int id;
     
     public Blockchain blockchain;
+    
+    // Creating of the wallet
     public Wallet(string username, string email, string password, List<string> secretPhrases, string publicKey, string privateKey, int balance, in Blockchain blockchain)
     {
         this.username = username;
@@ -32,6 +34,8 @@ public class Wallet : IWallet
         this.blockchain.wallets.Add(this);
         
     }
+    
+    // Sending transaction to the network
     public string SendTransaction(string receiver, int amount)
     {
         // Create a transaction
@@ -47,7 +51,8 @@ public class Wallet : IWallet
         
         return "";
     }
-
+    
+    // Serializing wallet to json string
     public string SerializerToJsonString()
     {
         string jsonString = $"{{ \"username\": \"{username}\", \"email\": \"{email}\", \"publicKey\": \"{publicKey}\", \"privateKey\": \"{privateKey}\", \"balance\": {balance}, \"id\": {id} }}";
