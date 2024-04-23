@@ -9,6 +9,7 @@ public class Server
     public string host;
     public int port;
 
+    // Initializing of the server onn machine
     public Server()
     {
         this.httpListener = new HttpListener();
@@ -28,6 +29,7 @@ public class Server
         }
     }
 
+    // Check if the port is available to run more servers on one machine
     public bool CheckPort(int port)
     {
         try
@@ -41,6 +43,7 @@ public class Server
             return false;
         }
     }
+    // Start of the server
     public void Start()
     {
         httpListener.Start();
@@ -49,9 +52,9 @@ public class Server
         {
             while (httpListener.IsListening)
             {
-                HttpListenerContext ocntext = httpListener.GetContext();
+                HttpListenerContext context = httpListener.GetContext();
                 
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + ocntext.Request.Url);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url);
             }
         });
         Console.WriteLine("Press something to stop the server...");
