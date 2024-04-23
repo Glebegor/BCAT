@@ -1,6 +1,8 @@
+using BCAT.Entities.Interfaces;
+
 namespace BCAT.Entities.Commons;
 
-public class Block
+public class Block : IBlock 
 {
     public string hash;
     public string prevHash;
@@ -13,5 +15,11 @@ public class Block
         this.prevHash = prevHash;
         this.transaction = transaction;
         this.index = index;
+    }
+
+    public string SerializerToJsonString()
+    {
+        string jsonString = $"{{ \"hash\": \"{hash}\", \"prevHash\": \"{prevHash}\", \"index\": {index}, \"transaction\": {transaction.SerializerToJsonString()}, }}";
+        return jsonString;
     }
 }
