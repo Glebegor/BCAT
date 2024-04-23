@@ -8,8 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="api\middlware\" />
-      <Folder Include="api\Routers\" />
+      <Folder Include="API\Middleware\" />
+      <Folder Include="API\Routers\Blockchain\" />
+      <Folder Include="API\Routers\NFT\" />
+      <Folder Include="API\Routers\Transaction\" />
+      <Folder Include="Entities\Interfaces\Routers\" />
+      <Folder Include="Entities\Interfaces\Usecases\" />
       <Folder Include="Entities\Requests\" />
     </ItemGroup>
 

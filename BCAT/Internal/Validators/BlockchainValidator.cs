@@ -2,6 +2,7 @@ using BCAT.Entities.Commons;
 
 namespace BCAT.Internal.Validators;
 
+// BLocal blockchain validator
 public class BlockchainValidator
 {
     public static bool ValidateBlockchain(Blockchain blockchain)

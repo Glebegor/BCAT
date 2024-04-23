@@ -22,6 +22,7 @@ public class Program
     }
     
 
+    // Test of local simulation
     static public void InitTest()
     {
         Blockchain blockchain = new Blockchain();
