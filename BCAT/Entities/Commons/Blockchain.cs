@@ -5,25 +5,28 @@ using System;
 
 namespace BCAT.Entities.Commons;
 
-public class Blockchain : IBlockchainInterface
+public class Blockchain : IBlockchain
 {
     public int amount;
-    
-    static public List<Block> chain = new List<Block>();
-    static public int countBlocks = 0;
+    public List<Block> chain = new List<Block>();
+    public List<Wallet> wallets = new List<Wallet>();
+    public int countBlocks = 0;
 
 
-
+    // Creating of the block in blockchain, and calculating hash
     public (Block, string) CreateBlock(Transaction transaction)
     {
         if (countBlocks == 0)
         {
-            (string hash, string error) = CalculateHash(transaction, "", 0);
-            if (error != "")
+            // If first block
+
+            (string hash, string err) = CalculateHash(transaction, "", 0);
+            if (err != "")
             {
-                return (null, error);
+                return (null, err);
             }
             countBlocks++;
+            amount += transaction.amount;
             
             Block block = new Block(hash, "", transaction, 1);
             chain.Add(block);
@@ -32,20 +35,23 @@ public class Blockchain : IBlockchainInterface
         }
         else
         {
-            (string hash, string error) = CalculateHash(transaction, chain[-1].hash, countBlocks);
-            if (error != "")
+            // If not first block
+            (string hash, string err) = CalculateHash(transaction, chain[chain.Count()-1].hash, countBlocks);
+            if (err != "")
             {
-                return (null, error);
+                return (null, err);
             }
             countBlocks++;
+            amount += transaction.amount;
 
-            Block block = new Block(hash, chain[-1].hash, transaction, countBlocks);
+            Block block = new Block(hash, chain[chain.Count()-1].hash, transaction, countBlocks);
             chain.Add(block);
             return (block, "");
         }
         
     }
 
+    // Using SHA256 to calculate hash
     public (string, string) CalculateHash(Transaction transaction, string prevHash, int index)
     {
         SHA256 sha256 = SHA256.Create();
