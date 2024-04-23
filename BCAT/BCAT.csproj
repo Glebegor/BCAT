@@ -11,7 +11,6 @@
       <Folder Include="api\middlware\" />
       <Folder Include="api\Routers\" />
       <Folder Include="Entities\Requests\" />
-      <Folder Include="Entities\Responses\" />
     </ItemGroup>
 
 </Project>

@@ -48,6 +48,7 @@ Status: !200
 
 ### Main documentation
 Wiki: [BCAT Wiki](https://github.com/Glebegor/BCAT/wiki)
+
 ### Protocol
 Blockchain will has custom protocol based on TCP/IP - BCAT Protocol.</br>
 BCAT need to work with blocks, transactions, wallets, mining etc.</br>
@@ -55,6 +56,6 @@ Protocol will use json format for data exchange.</br>
 
 ## Installation
 ## Usage
-## License
+
 ## Contributors
 ## Acknowledgements
