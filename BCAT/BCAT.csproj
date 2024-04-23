@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="api\" />
+      <Folder Include="api\middlware\" />
+      <Folder Include="api\Routers\" />
+      <Folder Include="Entities\Requests\" />
     </ItemGroup>
 
 </Project>
