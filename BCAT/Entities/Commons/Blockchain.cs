@@ -13,11 +13,13 @@ public class Blockchain : IBlockchain
     public int countBlocks = 0;
 
 
-
+    // Creating of the block in blockchain, and calculating hash
     public (Block, string) CreateBlock(Transaction transaction)
     {
         if (countBlocks == 0)
         {
+            // If first block
+
             (string hash, string err) = CalculateHash(transaction, "", 0);
             if (err != "")
             {
@@ -33,6 +35,7 @@ public class Blockchain : IBlockchain
         }
         else
         {
+            // If not first block
             (string hash, string err) = CalculateHash(transaction, chain[chain.Count()-1].hash, countBlocks);
             if (err != "")
             {
@@ -48,6 +51,7 @@ public class Blockchain : IBlockchain
         
     }
 
+    // Using SHA256 to calculate hash
     public (string, string) CalculateHash(Transaction transaction, string prevHash, int index)
     {
         SHA256 sha256 = SHA256.Create();
