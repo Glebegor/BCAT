@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "/Users/danamarisik/.nuget/packages/": {}
+    "/Users/glebegor/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/danamarisik/Documents/GitHub/BCAT/BCAT/BCAT.csproj",
+      "projectUniqueName": "/Users/glebegor/Programming/projects/my/BCAT/BCAT/BCAT.csproj",
       "projectName": "BCAT",
-      "projectPath": "/Users/danamarisik/Documents/GitHub/BCAT/BCAT/BCAT.csproj",
-      "packagesPath": "/Users/danamarisik/.nuget/packages/",
-      "outputPath": "/Users/danamarisik/Documents/GitHub/BCAT/BCAT/obj/",
+      "projectPath": "/Users/glebegor/Programming/projects/my/BCAT/BCAT/BCAT.csproj",
+      "packagesPath": "/Users/glebegor/.nuget/packages/",
+      "outputPath": "/Users/glebegor/Programming/projects/my/BCAT/BCAT/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/danamarisik/.nuget/NuGet/NuGet.Config"
+        "/Users/glebegor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
