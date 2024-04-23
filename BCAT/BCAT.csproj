@@ -9,7 +9,11 @@
 
     <ItemGroup>
       <Folder Include="api\middlware\" />
-      <Folder Include="api\Routers\" />
+      <Folder Include="api\Routers\Blockchain\" />
+      <Folder Include="api\Routers\NFT\" />
+      <Folder Include="api\Routers\Transaction\" />
+      <Folder Include="api\Routers\Wallet\" />
+      <Folder Include="Entities\Interfaces\Usecases\" />
       <Folder Include="Entities\Requests\" />
     </ItemGroup>
 

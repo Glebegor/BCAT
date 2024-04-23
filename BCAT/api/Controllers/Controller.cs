@@ -1,8 +1,9 @@
 using System.Net;
+using BCAT.Entities.Interfaces.Controllers;
 
 namespace BCAT.api.Controllers;
 
-public abstract class Controller
+public abstract class Controller : IHeadController
 {
     public abstract void HandelRequest(HttpListenerContext context);
 }
