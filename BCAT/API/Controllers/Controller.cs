@@ -1,6 +1,9 @@
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Text;
+using System.Text.Json;
 using BCAT.Entities.Interfaces.Controllers;
+using BCAT.Entities.Responses;
 
 namespace BCAT.API.Controllers;
 
@@ -11,11 +14,30 @@ public abstract class Controller : IHeadController
     {
         if (context.Request.HttpMethod == "GET" && context.Request.Url.AbsolutePath == "/ping")
         {
-            SendRespunse(context.Response, "pong", HttpStatusCode.OK);
+            Success<string> data = new Success<string>("Pong", 200, "Pong");
+            SendResponse(context.Response, data, HttpStatusCode.OK);
         }
     }
     public abstract void HandelRequest(HttpListenerContext context);
-    public abstract void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode);
+
+    public void SendResponse(HttpListenerResponse response, object responseBody, HttpStatusCode statusCode)
+    {
+        string json = JsonSerializer.Serialize(responseBody);
+
+        // Set the content type header
+        response.ContentType = "application/json";
+
+        // Set the status code
+        response.StatusCode = (int)statusCode;
+
+        // Write the JSON data to the response stream
+        byte[] buffer = Encoding.UTF8.GetBytes(json);
+        response.ContentLength64 = buffer.Length;
+        response.OutputStream.Write(buffer, 0, buffer.Length);
+
+        // Close the response stream
+        response.Close();
+    }
     
 }
 
@@ -25,11 +47,7 @@ public class NodeController : Controller
     {
         PingHandler(context);
     }
-
-    public override void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode)
-    {
-        
-    }
+    
 }
 
 public class NodeMiningController : Controller
@@ -39,11 +57,7 @@ public class NodeMiningController : Controller
         PingHandler(context);
 
     }
-    
-    public override void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode)
-    {
-        
-    }
+
 }
 
 public class MinerController : Controller
@@ -51,10 +65,5 @@ public class MinerController : Controller
     public override void HandelRequest(HttpListenerContext context)
     {
         PingHandler(context);
-    }
-    
-    public override void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode)
-    {
-        
     }
 }

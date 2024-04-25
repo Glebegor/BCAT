@@ -1,6 +1,8 @@
+using BCAT.Entities.Interfaces;
+
 namespace BCAT.Entities.Responses;
 
-public class Success<T>
+public class Success<T> 
 {
     public string message;
     public int code;
