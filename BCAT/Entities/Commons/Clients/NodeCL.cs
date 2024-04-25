@@ -32,7 +32,6 @@ public class NodeCL : Client
     }
     public override void Run()
     {
-        NodeController nodeController = new NodeController();
         Server server = new Server();
         server.Start("node");
     }

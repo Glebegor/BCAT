@@ -1,10 +1,14 @@
+using BCAT.API.Controllers;
+
 namespace BCAT.Entities.Commons.Clients;
 
 public class MinerCL : Client
 {
     public override void Run()
     {
-        // Function to run mining server
+        Server server = new Server();
+        server.Start("mining");
     }
+
 
 }
