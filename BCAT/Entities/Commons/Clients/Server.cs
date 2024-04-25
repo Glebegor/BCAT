@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Sockets;
+using BCAT.API.Controllers;
 
 namespace BCAT.Entities.Commons.Clients;
 
@@ -44,7 +45,7 @@ public class Server
         }
     }
     // Start of the server
-    public void Start()
+    public void Start(Controller controller)
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
@@ -55,6 +56,7 @@ public class Server
                 HttpListenerContext context = httpListener.GetContext();
                 
                 Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url);
+                controller.HandelRequest(context);
             }
         });
         Console.WriteLine("Press something to stop the server...");
