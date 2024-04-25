@@ -17,10 +17,22 @@ ANC has 6 "I't will be":
 - .NET Core
 
 ### API
+#### Ping API
+##### api/ping - GET
+Status: 200
+```json
+{
+  "message": "Success",
+  "data": {
+    "ping": "pong"
+  }
+}
+```
+
 #### Requests/Responses
 All requests and responses will be in json format.
 
-##### Success request
+##### Success Responses
 Status: 200
 ```json
 {
@@ -32,7 +44,7 @@ Status: 200
 ```
 data can be not included.
 
-##### Success request
+##### Success Responses
 Status: !200
 
 ```json
