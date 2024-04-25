@@ -6,6 +6,7 @@ namespace BCAT.Entities.Commons.Clients;
 
 public class NodeCL : Client
 {
+    public string myIp = "";
     public List<string> nodesInNetwork;
     public List<string> nodesMiningInNetwork;
     public List<string> miningsInNetwork;

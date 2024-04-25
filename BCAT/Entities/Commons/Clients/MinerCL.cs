@@ -9,6 +9,5 @@ public class MinerCL : Client
         Server server = new Server();
         server.Start("mining");
     }
-
-
+    
 }
