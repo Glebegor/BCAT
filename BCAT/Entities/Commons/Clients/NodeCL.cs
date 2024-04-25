@@ -25,7 +25,7 @@ public class NodeCL : Client
         blockchain = new Blockchain();
     }
     
-    static async void pingIpOfNode(HttpClient client, string ip)
+    async void pingIpOfNode(HttpClient client, string ip)
     {
         try
         {
@@ -34,12 +34,9 @@ public class NodeCL : Client
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine(DateTime.Now + "; Node " + ip + " is not available.");
+            nodesInNetwork.Remove(ip.Split("/")[2]);
         }
-        
-        
-        
     }
 
     // Update data from the network of blockchain
@@ -48,9 +45,9 @@ public class NodeCL : Client
         HttpClient client = new HttpClient();
         while (true)
         {
-            Console.WriteLine(DateTime.Now + "; " + "Updating data...");
             await Task.Delay(5000);
-            
+            Console.WriteLine(DateTime.Now + "; " + "Updating data...");
+
             foreach (var nodeIp in nodesInNetwork)
             {
                 if (nodeIp != myIp)
