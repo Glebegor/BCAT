@@ -1,4 +1,5 @@
 using System.Net.Http;
+using BCAT.API.Controllers;
 
 
 namespace BCAT.Entities.Commons.Clients;
@@ -31,7 +32,8 @@ public class NodeCL : Client
     }
     public override void Run()
     {
+        NodeController nodeController = new NodeController();
         Server server = new Server();
-        server.Start();
+        server.Start("node");
     }
 }
