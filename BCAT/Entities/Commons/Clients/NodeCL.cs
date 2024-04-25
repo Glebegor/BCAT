@@ -34,6 +34,6 @@ public class NodeCL : Client
     {
         NodeController nodeController = new NodeController();
         Server server = new Server();
-        server.Start(NodeController);
+        server.Start("node");
     }
 }
