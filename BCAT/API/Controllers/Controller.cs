@@ -20,9 +20,10 @@ public abstract class Controller : IHeadController
     }
     public abstract void HandelRequest(HttpListenerContext context);
 
-    public void SendResponse(HttpListenerResponse response, object responseBody, HttpStatusCode statusCode)
+    public void SendResponse<T>(HttpListenerResponse response, T responseBody, HttpStatusCode statusCode)
     {
         string json = JsonSerializer.Serialize(responseBody);
+        Console.WriteLine(json);
 
         // Set the content type header
         response.ContentType = "application/json";
