@@ -15,7 +15,7 @@ public class Server
     public Server()
     {
         this.httpListener = new HttpListener();
-        this.host = "localhost";
+        this.host = "127.0.0.1";
         this.port = 8080;
         while (true)
         {

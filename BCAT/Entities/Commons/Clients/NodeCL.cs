@@ -16,24 +16,45 @@ public class NodeCL : Client
     // Initializing of Node blockchain part
     public NodeCL()
     {
+        myIp = "127.0.0.1:8080";
         nodesInNetwork = new List<string>();
         nodesMiningInNetwork = new List<string>();
         miningsInNetwork = new List<string>();
         walletsInNetwork = new List<string>();
         blockchain = new Blockchain();
     }
+    
+    static async Task pingIpOfNode(HttpClient client, string ip)
+    {
+        HttpResponseMessage response = await client.GetAsync("http://" + ip + "/ping");
+    }
 
     // Update data from the network of blockchain
-    public void UpdateData()
+    public async void UpdateData()
     {
-        foreach (var nodeIp in nodesInNetwork)
+        HttpClient client = new HttpClient();
+        while (true)
         {
+            await Task.Delay(5000);
             
+            foreach (var nodeIp in nodesInNetwork)
+            {
+                if (nodeIp == myIp)
+                {
+                    continue;
+                }
+                else
+                {
+                    await pingIpOfNode(client, nodeIp);
+
+                }
+            }
         }
     }
     public override void Run()
     {
         Server server = new Server();
+        UpdateData();
         server.Start("node");
     }
 }
