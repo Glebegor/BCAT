@@ -1,10 +1,15 @@
 using System.Net;
+using System.Net.NetworkInformation;
 using BCAT.Entities.Interfaces.Controllers;
 
 namespace BCAT.API.Controllers;
 
 public abstract class Controller : IHeadController
 {
+    public void PingHandler(HttpClientHandler context)
+    {
+        
+    }
     public abstract void HandelRequest(HttpListenerContext context);
     public abstract void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode);
     
