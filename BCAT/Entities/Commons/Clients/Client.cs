@@ -17,7 +17,6 @@ public abstract class Client
     // Initializing of Node blockchain part
     public Client()
     {
-        myIp = "127.0.0.1:8080";
         nodesInNetwork = new List<string>();
         nodesInNetwork.Add(myIp);
         nodesMiningInNetwork = new List<string>();

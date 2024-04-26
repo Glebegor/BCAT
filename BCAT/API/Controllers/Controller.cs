@@ -28,10 +28,12 @@ public abstract class Controller : IHeadController
         
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
             requestIp = jsonObject.ip;
-                
+            
+            Console.WriteLine(!client.nodesInNetwork.Contains(requestIp));
             if (!client.nodesInNetwork.Contains(requestIp))
             {
                 client.nodesInNetwork.Add(requestIp);
+                
             }
             Success<string> data = new Success<string>("Pong", 200, "Pong");
             SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
@@ -44,7 +46,6 @@ public abstract class Controller : IHeadController
     {
         string json = JsonSerializer.Serialize(responseBody);
         
-        Console.WriteLine(json);
         // Set the content type header
         context.Response.ContentType = "application/json";
         
