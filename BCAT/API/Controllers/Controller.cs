@@ -14,7 +14,7 @@ public abstract class Controller : IHeadController
     {
         if (context.Request.HttpMethod == "GET" && context.Request.Url.AbsolutePath == "/ping")
         {
-            Console.WriteLine(client.host);
+            Console.WriteLine(client.myIp);
             Success<string> data = new Success<string>("Pong", 200, "Pong");
             SendResponse(context.Response, data, HttpStatusCode.OK);
         }
