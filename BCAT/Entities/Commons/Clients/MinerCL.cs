@@ -10,4 +10,4 @@ public class MinerCL : Client
         server.Start("mining");
     }
     
-}
+}   

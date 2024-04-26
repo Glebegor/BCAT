@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text;
 using BCAT.API.Controllers;
 
 
@@ -29,7 +30,9 @@ public class NodeCL : Client
     {
         try
         {
-            HttpResponseMessage response = await client.GetAsync(ip);
+            HttpContent content = new StringContent(" {\"ip\":" + "\"" + ip + "\"" + " } ", Encoding.UTF8, "text/plain");
+            
+            HttpResponseMessage response = await client.PostAsync(ip.Split("/")[2], content);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception e)

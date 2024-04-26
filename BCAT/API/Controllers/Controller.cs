@@ -2,9 +2,12 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using BCAT.Entities.Commons.Clients;
 using BCAT.Entities.Interfaces.Controllers;
 using BCAT.Entities.Responses;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace BCAT.API.Controllers;
 
@@ -12,9 +15,25 @@ public abstract class Controller : IHeadController
 {
     public void PingHandler(HttpListenerContext context, in Client client)
     {
-        if (context.Request.HttpMethod == "GET" && context.Request.Url.AbsolutePath == "/ping")
+        if (context.Request.HttpMethod == "POST" && context.Request.Url.AbsolutePath == "/ping")
         {
-            Console.WriteLine(client.myIp);
+            string ipOfServer; 
+
+            Console.WriteLine(client.nodesInNetwork.Count);
+            string requestBody;
+            
+            using (StreamReader reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            {
+                requestBody = reader.ReadToEnd();
+            }
+            
+
+            dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
+            
+            if (!client.nodesInNetwork.Contains(jsonObject.ip))
+            {
+                client.nodesInNetwork.Add(context.Request.UserHostAddress);
+            }
             Success<string> data = new Success<string>("Pong", 200, "Pong");
             SendResponse(context.Response, data, HttpStatusCode.OK);
         }
