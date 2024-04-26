@@ -31,7 +31,7 @@ public class NodeCL : Client
     {
         try
         {
-            HttpContent content = new StringContent(" {\"ip\":" + "\"" + ip + "\"" + " } ", Encoding.UTF8, "text/plain");
+            HttpContent content = new StringContent(" {\"ip\":" + "\"" + myIp + "\"" + " } ", Encoding.UTF8, "text/plain");
             
             HttpResponseMessage response = await client.PostAsync(ip, content);
             response.EnsureSuccessStatusCode();
@@ -43,14 +43,15 @@ public class NodeCL : Client
     }
 
     // Update data from the network of blockchain
-    public async void UpdateData()
+    public async Task UpdateData()
     {
-        HttpClient client = new HttpClient();
         while (true)
         {
+            HttpClient client = new HttpClient();
             await Task.Delay(5000);
             Console.WriteLine(DateTime.Now + "; " + "Updating data...");
-            nodesInNetworkLastUpdate = nodesInNetwork;
+            Console.WriteLine(nodesInNetwork.Count);
+            nodesInNetworkLastUpdate = this.nodesInNetwork;
             foreach (var nodeIp in nodesInNetworkLastUpdate)
             {
                 if (nodeIp != myIp)
