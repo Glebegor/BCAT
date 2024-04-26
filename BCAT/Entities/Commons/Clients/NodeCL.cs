@@ -9,6 +9,7 @@ public class NodeCL : Client
 {
     public string myIp = "";
     public List<string> nodesInNetwork;
+    public List<string> nodesInNetworkLastUpdate;
     public List<string> nodesMiningInNetwork;
     public List<string> miningsInNetwork;
     public List<string> walletsInNetwork;
@@ -32,13 +33,12 @@ public class NodeCL : Client
         {
             HttpContent content = new StringContent(" {\"ip\":" + "\"" + ip + "\"" + " } ", Encoding.UTF8, "text/plain");
             
-            HttpResponseMessage response = await client.PostAsync(ip.Split("/")[2], content);
+            HttpResponseMessage response = await client.PostAsync(ip, content);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception e)
         {
-            Console.WriteLine(DateTime.Now + "; Node " + ip + " is not available.");
-            nodesInNetwork.Remove(ip.Split("/")[2]);
+            Console.WriteLine(DateTime.Now + "; Node " + ip + " is not available; " + e.ToString());
         }
     }
 
@@ -50,8 +50,8 @@ public class NodeCL : Client
         {
             await Task.Delay(5000);
             Console.WriteLine(DateTime.Now + "; " + "Updating data...");
-
-            foreach (var nodeIp in nodesInNetwork)
+            nodesInNetworkLastUpdate = nodesInNetwork;
+            foreach (var nodeIp in nodesInNetworkLastUpdate)
             {
                 if (nodeIp != myIp)
                 {
