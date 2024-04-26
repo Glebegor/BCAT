@@ -60,7 +60,7 @@ public class Server
                 switch (controllerName)
                 {
                     case "node":
-                        controller = new NodeController();
+                        controller = new NodeController(this);
                         break;
                     case "node-mining":
                         controller = new NodeMiningController();

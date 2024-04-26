@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.Json;
+using BCAT.Entities.Commons.Clients;
 using BCAT.Entities.Interfaces.Controllers;
 using BCAT.Entities.Responses;
 
@@ -9,8 +10,12 @@ namespace BCAT.API.Controllers;
 
 public abstract class Controller : IHeadController
 {
-    
-    public void PingHandler(HttpListenerContext context)
+    public Server server; 
+    public Controller(in Server server)
+    {
+        this.server = server;
+    }
+    public void PingHandler(HttpListenerContext context, in Server server)
     {
         if (context.Request.HttpMethod == "GET" && context.Request.Url.AbsolutePath == "/ping")
         {
@@ -43,18 +48,28 @@ public abstract class Controller : IHeadController
 
 public class NodeController : Controller
 {
+    public Server server;
+    public NodeController(in Server server) : base(server)
+    {
+        this.server = server;
+    }
     public override void HandelRequest(HttpListenerContext context)
     {
-        PingHandler(context);
+        PingHandler(context, server);
     }
     
 }
 
 public class NodeMiningController : Controller
 {
+    public Server server;
+    public NodeMiningController(in Server server) : base(server)
+    {
+        this.server = server;
+    }
     public override void HandelRequest(HttpListenerContext context)
     {
-        PingHandler(context);
+        PingHandler(context, server);
 
     }
 
@@ -62,8 +77,13 @@ public class NodeMiningController : Controller
 
 public class MinerController : Controller
 {
+    public Server server;
+    public MinerController(in Server server) : base(server)
+    {
+        this.server = server;
+    }
     public override void HandelRequest(HttpListenerContext context)
     {
-        PingHandler(context);
+        PingHandler(context, server);
     }
 }
