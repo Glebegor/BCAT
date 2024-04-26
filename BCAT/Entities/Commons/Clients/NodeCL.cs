@@ -59,7 +59,7 @@ public class NodeCL : Client
     }
     public override void Run()
     {
-        Server server = new Server();
+        Server server = new Server(this);
         myIp = server.host + ":" + server.port.ToString();
         UpdateData();
         server.Start("node");

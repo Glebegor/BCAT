@@ -10,13 +10,15 @@ public class Server
     public string host;
     public int port;
     private Controller controller;
+    public Client client; 
 
     // Initializing of the server onn machine
-    public Server()
+    public Server(in Client client)
     {
         this.httpListener = new HttpListener();
         this.host = "127.0.0.1";
         this.port = 8080;
+        this.client = client;
         while (true)
         {
             if (!CheckPort(port))
@@ -60,13 +62,13 @@ public class Server
                 switch (controllerName)
                 {
                     case "node":
-                        controller = new NodeController(this);
+                        controller = new NodeController(client);
                         break;
                     case "node-mining":
-                        controller = new NodeMiningController();
+                        controller = new NodeMiningController(client);
                         break;
                     case "miner":
-                        controller = new MinerController();
+                        controller = new MinerController(client);
                         break;
                     case "wallet":
                         break;

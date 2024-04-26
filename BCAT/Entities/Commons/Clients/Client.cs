@@ -7,6 +7,12 @@ public abstract class Client
 {
     public string host;
     public string port;
+    public string myIp = "";
+    public List<string> nodesInNetwork;
+    public List<string> nodesMiningInNetwork;
+    public List<string> miningsInNetwork;
+    public List<string> walletsInNetwork;
+    public Blockchain blockchain;
 
     public abstract void Run();
 }

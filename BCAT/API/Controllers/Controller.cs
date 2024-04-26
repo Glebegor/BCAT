@@ -10,15 +10,11 @@ namespace BCAT.API.Controllers;
 
 public abstract class Controller : IHeadController
 {
-    public Server server; 
-    public Controller(in Server server)
-    {
-        this.server = server;
-    }
-    public void PingHandler(HttpListenerContext context, in Server server)
+    public void PingHandler(HttpListenerContext context, in Client client)
     {
         if (context.Request.HttpMethod == "GET" && context.Request.Url.AbsolutePath == "/ping")
         {
+            Console.WriteLine(client.host);
             Success<string> data = new Success<string>("Pong", 200, "Pong");
             SendResponse(context.Response, data, HttpStatusCode.OK);
         }
@@ -48,42 +44,41 @@ public abstract class Controller : IHeadController
 
 public class NodeController : Controller
 {
-    public Server server;
-    public NodeController(in Server server) : base(server)
+    public Client client;
+    public NodeController(in Client client)
     {
-        this.server = server;
+        this.client = client;
     }
     public override void HandelRequest(HttpListenerContext context)
     {
-        PingHandler(context, server);
+        PingHandler(context, client);
     }
     
 }
 
 public class NodeMiningController : Controller
 {
-    public Server server;
-    public NodeMiningController(in Server server) : base(server)
+    public Client client;
+    public NodeMiningController(in Client client)
     {
-        this.server = server;
+        this.client = client;
     }
     public override void HandelRequest(HttpListenerContext context)
     {
-        PingHandler(context, server);
-
+        PingHandler(context, client);
     }
 
 }
 
 public class MinerController : Controller
 {
-    public Server server;
-    public MinerController(in Server server) : base(server)
+    public Client client;
+    public MinerController(in Client client)
     {
-        this.server = server;
+        this.client = client;
     }
     public override void HandelRequest(HttpListenerContext context)
     {
-        PingHandler(context, server);
+        PingHandler(context, client);
     }
 }
