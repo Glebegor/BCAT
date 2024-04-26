@@ -1,7 +1,7 @@
-# ANC - Blockchain Anonymous Token
+# BCAT - Blockchain Anonymous Token
 
 ## Description
-ANC has 6 "I't will be":
+BCAT has 6 "I't will be":
 - It will be public blockchain.
 - It will be anonymous.
 - It will be fast.

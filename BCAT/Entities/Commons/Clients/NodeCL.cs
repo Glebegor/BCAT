@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text;
 using BCAT.API.Controllers;
 
 
@@ -25,21 +26,20 @@ public class NodeCL : Client
         blockchain = new Blockchain();
     }
     
-    static async void pingIpOfNode(HttpClient client, string ip)
+    async void pingIpOfNode(HttpClient client, string ip)
     {
         try
         {
-            HttpResponseMessage response = await client.GetAsync(ip);
+            HttpContent content = new StringContent(" {\"ip\":" + "\"" + ip + "\"" + " } ", Encoding.UTF8, "text/plain");
+            
+            HttpResponseMessage response = await client.PostAsync(ip.Split("/")[2], content);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine(DateTime.Now + "; Node " + ip + " is not available.");
+            nodesInNetwork.Remove(ip.Split("/")[2]);
         }
-        
-        
-        
     }
 
     // Update data from the network of blockchain
@@ -48,9 +48,9 @@ public class NodeCL : Client
         HttpClient client = new HttpClient();
         while (true)
         {
-            Console.WriteLine(DateTime.Now + "; " + "Updating data...");
             await Task.Delay(5000);
-            
+            Console.WriteLine(DateTime.Now + "; " + "Updating data...");
+
             foreach (var nodeIp in nodesInNetwork)
             {
                 if (nodeIp != myIp)
@@ -62,7 +62,7 @@ public class NodeCL : Client
     }
     public override void Run()
     {
-        Server server = new Server();
+        Server server = new Server(this);
         myIp = server.host + ":" + server.port.ToString();
         UpdateData();
         server.Start("node");
