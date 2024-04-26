@@ -5,5 +5,5 @@ namespace BCAT.Entities.Interfaces.Controllers;
 public interface IHeadController
 {
     void HandelRequest(HttpListenerContext context);
-    public void SendResponse<T>(HttpListenerResponse response, T responseBody, HttpStatusCode statusCode);
+    public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode);
 }
