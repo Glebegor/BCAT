@@ -17,9 +17,7 @@ public abstract class Controller : IHeadController
     {
         if (context.Request.HttpMethod == "POST" && context.Request.Url.AbsolutePath == "/ping")
         {
-            string ipOfServer; 
-
-            Console.WriteLine(client.nodesInNetwork.Count);
+            string requestIp;
             string requestBody;
             
             using (StreamReader reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
@@ -27,38 +25,41 @@ public abstract class Controller : IHeadController
                 requestBody = reader.ReadToEnd();
             }
             
-
+        
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
+            requestIp = jsonObject.ip;
             
-            if (!client.nodesInNetwork.Contains(jsonObject.ip))
+            Console.WriteLine(!client.nodesInNetwork.Contains(requestIp));
+            if (!client.nodesInNetwork.Contains(requestIp))
             {
-                client.nodesInNetwork.Add(context.Request.UserHostAddress);
+                client.nodesInNetwork.Add(requestIp);
+                
             }
             Success<string> data = new Success<string>("Pong", 200, "Pong");
-            SendResponse(context.Response, data, HttpStatusCode.OK);
+            SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
+            
         }
     }
     public abstract void HandelRequest(HttpListenerContext context);
 
-    public void SendResponse<T>(HttpListenerResponse response, T responseBody, HttpStatusCode statusCode)
+    public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode)
     {
         string json = JsonSerializer.Serialize(responseBody);
-
+        
         // Set the content type header
-        response.ContentType = "application/json";
-
+        context.Response.ContentType = "application/json";
+        
         // Set the status code
-        response.StatusCode = (int)statusCode;
-
+        context.Response.StatusCode = (int)statusCode;
+        
         // Write the JSON data to the response stream
         byte[] buffer = Encoding.UTF8.GetBytes(json);
-        response.ContentLength64 = buffer.Length;
-        response.OutputStream.Write(buffer, 0, buffer.Length);
-
+         context.Response.ContentLength64 = buffer.Length;
+         context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+        
         // Close the response stream
-        response.Close();
+         context.Response.Close();
     }
-    
 }
 
 public class NodeController : Controller
