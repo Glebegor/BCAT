@@ -1,9 +1,10 @@
 using System.Net;
+using BCAT.Entities.Commons.Clients;
 
 namespace BCAT.Entities.Interfaces.Controllers;
 
 public interface IHeadController
 {
-    void HandelRequest(HttpListenerContext context);
-    void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode);
+    public abstract void HandelRequest(HttpListenerContext context, in Client client);
+    public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode);
 }

@@ -1,48 +1,108 @@
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using BCAT.Entities.Commons.Clients;
 using BCAT.Entities.Interfaces.Controllers;
+using BCAT.Entities.Responses;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace BCAT.API.Controllers;
 
 public abstract class Controller : IHeadController
 {
-    public abstract void HandelRequest(HttpListenerContext context);
-    public abstract void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode);
-    
+    public void PingHandler(HttpListenerContext context, in Client client)
+    {
+        if (context.Request.HttpMethod == "POST" && context.Request.Url.AbsolutePath == "/ping")
+        {
+            string requestIp;
+            string requestBody;
+            
+            using (StreamReader reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            {
+                requestBody = reader.ReadToEnd();
+            }
+            
+        
+            dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
+            requestIp = jsonObject.ip;
+            
+            foreach (string node in client.nodesInNetwork)
+            {
+                Console.WriteLine(node);
+            }
+            if (!client.nodesInNetwork.Contains(requestIp))
+            {
+                client.nodesInNetwork.Add(requestIp);
+                
+            }
+            Success<string> data = new Success<string>("Pong", 200, "Pong");
+            SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
+            
+        }
+    }
+
+    public abstract void HandelRequest(HttpListenerContext context, in Client client);
+
+    public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode)
+    {
+        string json = JsonSerializer.Serialize(responseBody);
+        
+        // Set the content type header
+        context.Response.ContentType = "application/json";
+        
+        // Set the status code
+        context.Response.StatusCode = (int)statusCode;
+        
+        // Write the JSON data to the response stream
+        byte[] buffer = Encoding.UTF8.GetBytes(json);
+         context.Response.ContentLength64 = buffer.Length;
+         context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+        
+        // Close the response stream
+         context.Response.Close();
+    }
 }
 
 public class NodeController : Controller
 {
-    public override void HandelRequest(HttpListenerContext context)
+    // public Client client;
+    // public NodeController()
+    // {
+    //     this.client = client;
+    // }
+    public override void HandelRequest(HttpListenerContext context, in Client client)
     {
+        PingHandler(context, client);
     }
-
-    public override void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode)
-    {
-        
-    }
+    
 }
 
 public class NodeMiningController : Controller
 {
-    public override void HandelRequest(HttpListenerContext context)
+    // public Client client;
+    // public NodeMiningController()
+    // {
+    //     this.client = client;
+    // }
+    public override void HandelRequest(HttpListenerContext context, in Client client)
     {
+        PingHandler(context, client);
+    }
 
-    }
-    
-    public override void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode)
-    {
-        
-    }
 }
 
 public class MinerController : Controller
 {
-    public override void HandelRequest(HttpListenerContext context)
+    // public Client client;
+    // public MinerController()
+    // {
+    //     this.client = client;
+    // }
+    public override void HandelRequest(HttpListenerContext context,  in Client client)
     {
-    }
-    
-    public override void SendRespunse(HttpListenerResponse response, string responseBody, HttpStatusCode statusCode)
-    {
-        
+        PingHandler(context, client);
     }
 }
