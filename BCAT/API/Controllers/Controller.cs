@@ -29,7 +29,10 @@ public abstract class Controller : IHeadController
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
             requestIp = jsonObject.ip;
             
-            Console.WriteLine(!client.nodesInNetwork.Contains(requestIp));
+            foreach (string node in client.nodesInNetwork)
+            {
+                Console.WriteLine(node);
+            }
             if (!client.nodesInNetwork.Contains(requestIp))
             {
                 client.nodesInNetwork.Add(requestIp);
@@ -40,7 +43,8 @@ public abstract class Controller : IHeadController
             
         }
     }
-    public abstract void HandelRequest(HttpListenerContext context);
+
+    public abstract void HandelRequest(HttpListenerContext context, in Client client);
 
     public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode)
     {
@@ -64,12 +68,12 @@ public abstract class Controller : IHeadController
 
 public class NodeController : Controller
 {
-    public Client client;
-    public NodeController(in Client client)
-    {
-        this.client = client;
-    }
-    public override void HandelRequest(HttpListenerContext context)
+    // public Client client;
+    // public NodeController()
+    // {
+    //     this.client = client;
+    // }
+    public override void HandelRequest(HttpListenerContext context, in Client client)
     {
         PingHandler(context, client);
     }
@@ -78,12 +82,12 @@ public class NodeController : Controller
 
 public class NodeMiningController : Controller
 {
-    public Client client;
-    public NodeMiningController(in Client client)
-    {
-        this.client = client;
-    }
-    public override void HandelRequest(HttpListenerContext context)
+    // public Client client;
+    // public NodeMiningController()
+    // {
+    //     this.client = client;
+    // }
+    public override void HandelRequest(HttpListenerContext context, in Client client)
     {
         PingHandler(context, client);
     }
@@ -92,12 +96,12 @@ public class NodeMiningController : Controller
 
 public class MinerController : Controller
 {
-    public Client client;
-    public MinerController(in Client client)
-    {
-        this.client = client;
-    }
-    public override void HandelRequest(HttpListenerContext context)
+    // public Client client;
+    // public MinerController()
+    // {
+    //     this.client = client;
+    // }
+    public override void HandelRequest(HttpListenerContext context,  in Client client)
     {
         PingHandler(context, client);
     }

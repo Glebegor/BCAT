@@ -10,15 +10,13 @@ public class Server
     public string host;
     public int port;
     private Controller controller;
-    public Client client; 
 
     // Initializing of the server onn machine
-    public Server(in Client client)
+    public Server()
     {
         this.httpListener = new HttpListener();
         this.host = "127.0.0.1";
         this.port = 8080;
-        this.client = client;
         while (true)
         {
             if (!CheckPort(port))
@@ -48,7 +46,7 @@ public class Server
         }
     }
     // Start of the server
-    public void Start(string controllerName)
+    public void Start(string controllerName, in Client client)
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
@@ -62,18 +60,18 @@ public class Server
                 switch (controllerName)
                 {
                     case "node":
-                        controller = new NodeController(client);
+                        controller = new NodeController();
                         break;
                     case "node-mining":
-                        controller = new NodeMiningController(client);
+                        controller = new NodeMiningController();
                         break;
                     case "miner":
-                        controller = new MinerController(client);
+                        controller = new MinerController();
                         break;
                     case "wallet":
                         break;
                 }
-                controller.HandelRequest(context);
+                controller.HandelRequest(context, client);
             }
         });
         Console.WriteLine("Press something to stop the server...");
@@ -81,4 +79,5 @@ public class Server
         
         httpListener.Stop();
     }
+    
 }

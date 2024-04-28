@@ -6,8 +6,8 @@ public class NodeMining : Client
 {
     public override void Run()
     {
-        Server server = new Server(this);
-        server.Start("node-mining");
+        Server server = new Server();
+        server.Start("node-mining", this);
     }
 
 }
