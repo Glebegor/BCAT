@@ -7,7 +7,7 @@ public class MinerCL : Client
     public override void Run()
     {
         Server server = new Server();
-        server.Start("mining", this);
+        server.Start("mining");
     }
     
 }   

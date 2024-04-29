@@ -46,8 +46,9 @@ public class Server
         }
     }
     // Start of the server
-    public void Start(string controllerName, in Client client)
+    public void Start(string controllerName)
     {
+        
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
         ThreadPool.QueueUserWorkItem((o) =>
@@ -55,7 +56,6 @@ public class Server
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                
                 Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 switch (controllerName)
                 {
@@ -71,7 +71,7 @@ public class Server
                     case "wallet":
                         break;
                 }
-                controller.HandelRequest(context, client);
+                controller.HandelRequest(context);
             }
         });
         Console.WriteLine("Press something to stop the server...");

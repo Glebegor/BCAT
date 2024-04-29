@@ -5,6 +5,6 @@ namespace BCAT.Entities.Interfaces.Controllers;
 
 public interface IHeadController
 {
-    public abstract void HandelRequest(HttpListenerContext context, in Client client);
+    public abstract void HandelRequest(HttpListenerContext context);
     public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode);
 }
