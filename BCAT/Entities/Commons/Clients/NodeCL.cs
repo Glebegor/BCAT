@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using BCAT.API.Controllers;
@@ -38,10 +39,21 @@ public class NodeCL : Client
         }
         catch (Exception e)
         {
-            Console.WriteLine(DateTime.Now + "; Node " + ip + " is not available; " + e.ToString());
         }
     }
 
+    async void updateNodes(HttpClient client, string ip)
+    {
+        try
+        {
+            HttpContent content = new StringContent("{\"data\":" + "\"" + string.Join(",", nodesInNetwork) + "\"}", Encoding.UTF8, "text/plain");
+            HttpResponseMessage response = await client.PostAsync(ip, content);
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception e)
+        {
+        }
+    }
     // Update data from the network of blockchain
     public async Task UpdateData()
     {
@@ -55,7 +67,8 @@ public class NodeCL : Client
             {
                 if (nodeIp != myIp)
                 {
-                    pingIpOfNode(client, "http://" + nodeIp + "/ping");
+                    // pingIpOfNode(client, "http://" + nodeIp + "/ping");
+                    updateNodes(client, "http://" + nodeIp + "/update/nodes");
                 }
             }
         }
@@ -64,6 +77,10 @@ public class NodeCL : Client
     {
         Server server = new Server();
         myIp = server.host + ":" + server.port.ToString();
+        if (!nodesInNetwork.Contains(myIp))
+        {
+            nodesInNetwork.Add(myIp);
+        }
         UpdateData();
         server.Start(this);
     }
