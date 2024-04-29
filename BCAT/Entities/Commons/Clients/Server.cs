@@ -49,17 +49,18 @@ public class Server
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        Console.WriteLine("________________________________________________________");
+
         ThreadPool.QueueUserWorkItem((o) =>
         {
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeController controller = new NodeController();
                 controller.HandelRequest(context, client);
             }
         });
-        Console.WriteLine("Press something to stop the server...");
         Console.ReadKey();
         
         httpListener.Stop();
@@ -68,17 +69,17 @@ public class Server
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        Console.WriteLine("________________________________________________________");
         ThreadPool.QueueUserWorkItem((o) =>
         {
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeMiningController controller = new NodeMiningController();
                 // controller.HandelRequest(context);
             }
         });
-        Console.WriteLine("Press something to stop the server...");
         Console.ReadKey();
         
         httpListener.Stop();
@@ -87,17 +88,17 @@ public class Server
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        Console.WriteLine("________________________________________________________");
         ThreadPool.QueueUserWorkItem((o) =>
         {
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeMiningController controller = new NodeMiningController();
                 // controller.Ha(context);
             }
         });
-        Console.WriteLine("Press something to stop the server...");
         Console.ReadKey();
         
         httpListener.Stop();
