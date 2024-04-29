@@ -1,0 +1,42 @@
+# Dirs
+.idea/
+.idea
+.idea/*
+bin/
+obj/
+lib/
+lib64/
+share/
+include/
+local/
+tmp/
+temp/
+temp-*
+obj/*1
+obj.*
+Obj/*
+
+
+# Files
+*.tmp
+*.log
+*.bak
+*.swp
+*.swo
+*.swn
+
+
+# Secret info
+wallet.json
+node.json
+mining.json
+node-mining.json
+
+# Env
+*.env
+*.env.*
+*.envrc
+*.env.local
+*.env.development
+*.env.test
+*.env.production

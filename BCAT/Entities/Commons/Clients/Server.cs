@@ -9,16 +9,13 @@ public class Server
     public HttpListener httpListener;
     public string host;
     public int port;
-    private Controller controller;
-    public Client client; 
 
     // Initializing of the server onn machine
-    public Server(in Client client)
+    public Server()
     {
         this.httpListener = new HttpListener();
         this.host = "127.0.0.1";
         this.port = 8080;
-        this.client = client;
         while (true)
         {
             if (!CheckPort(port))
@@ -48,7 +45,7 @@ public class Server
         }
     }
     // Start of the server
-    public void Start(string controllerName)
+    public void Start(NodeCL client)
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
@@ -57,23 +54,9 @@ public class Server
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                
                 Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
-                switch (controllerName)
-                {
-                    case "node":
-                        controller = new NodeController(client);
-                        break;
-                    case "node-mining":
-                        controller = new NodeMiningController(client);
-                        break;
-                    case "miner":
-                        controller = new MinerController(client);
-                        break;
-                    case "wallet":
-                        break;
-                }
-                controller.HandelRequest(context);
+                NodeController controller = new NodeController();
+                controller.HandelRequest(context, client);
             }
         });
         Console.WriteLine("Press something to stop the server...");
@@ -81,4 +64,43 @@ public class Server
         
         httpListener.Stop();
     }
+    public void Start(MinerCL client)
+    {
+        httpListener.Start();
+        Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        ThreadPool.QueueUserWorkItem((o) =>
+        {
+            while (httpListener.IsListening)
+            {
+                HttpListenerContext context = httpListener.GetContext();
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                NodeMiningController controller = new NodeMiningController();
+                // controller.HandelRequest(context);
+            }
+        });
+        Console.WriteLine("Press something to stop the server...");
+        Console.ReadKey();
+        
+        httpListener.Stop();
+    }
+    public void Start(NodeMiningCL client)
+    {
+        httpListener.Start();
+        Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        ThreadPool.QueueUserWorkItem((o) =>
+        {
+            while (httpListener.IsListening)
+            {
+                HttpListenerContext context = httpListener.GetContext();
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                NodeMiningController controller = new NodeMiningController();
+                // controller.Ha(context);
+            }
+        });
+        Console.WriteLine("Press something to stop the server...");
+        Console.ReadKey();
+        
+        httpListener.Stop();
+    }
+    
 }

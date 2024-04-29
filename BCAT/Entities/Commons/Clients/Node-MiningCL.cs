@@ -2,12 +2,12 @@ using BCAT.API.Controllers;
 
 namespace BCAT.Entities.Commons.Clients;
 
-public class NodeMining : Client
+public class NodeMiningCL : Client
 {
     public override void Run()
     {
-        Server server = new Server(this);
-        server.Start("node-mining");
+        // Server server = new Server();
+        // server.Start("node-mining");
     }
 
 }
