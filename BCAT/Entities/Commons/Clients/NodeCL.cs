@@ -46,7 +46,6 @@ public class NodeCL : Client
     {
         try
         {
-            Console.WriteLine("{\"data\":" + "\"" + string.Join(",", nodesInNetwork) + "\"}");
             HttpContent content = new StringContent("{\"data\":" + "\"" + string.Join(",", nodesInNetwork) + "\"}", Encoding.UTF8, "text/plain");
             HttpResponseMessage response = await client.PostAsync(ip, content);
             response.EnsureSuccessStatusCode();
@@ -68,7 +67,7 @@ public class NodeCL : Client
             {
                 if (nodeIp != myIp)
                 {
-                    pingIpOfNode(client, "http://" + nodeIp + "/ping");
+                    // pingIpOfNode(client, "http://" + nodeIp + "/ping");
                     updateNodes(client, "http://" + nodeIp + "/update/nodes");
                 }
             }
@@ -78,6 +77,10 @@ public class NodeCL : Client
     {
         Server server = new Server();
         myIp = server.host + ":" + server.port.ToString();
+        if (!nodesInNetwork.Contains(myIp))
+        {
+            nodesInNetwork.Add(myIp);
+        }
         UpdateData();
         server.Start(this);
     }
