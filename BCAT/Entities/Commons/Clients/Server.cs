@@ -49,6 +49,8 @@ public class Server
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        Console.WriteLine("________________________________________________________");
+
         ThreadPool.QueueUserWorkItem((o) =>
         {
             while (httpListener.IsListening)
@@ -59,7 +61,6 @@ public class Server
                 controller.HandelRequest(context, client);
             }
         });
-        Console.WriteLine("Press something to stop the server...");
         Console.ReadKey();
         
         httpListener.Stop();
@@ -68,6 +69,7 @@ public class Server
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        Console.WriteLine("________________________________________________________");
         ThreadPool.QueueUserWorkItem((o) =>
         {
             while (httpListener.IsListening)
@@ -78,7 +80,6 @@ public class Server
                 // controller.HandelRequest(context);
             }
         });
-        Console.WriteLine("Press something to stop the server...");
         Console.ReadKey();
         
         httpListener.Stop();
@@ -87,6 +88,7 @@ public class Server
     {
         httpListener.Start();
         Console.WriteLine("Started server on http://" + host + ":" + port.ToString() + "/");
+        Console.WriteLine("________________________________________________________");
         ThreadPool.QueueUserWorkItem((o) =>
         {
             while (httpListener.IsListening)
@@ -97,7 +99,6 @@ public class Server
                 // controller.Ha(context);
             }
         });
-        Console.WriteLine("Press something to stop the server...");
         Console.ReadKey();
         
         httpListener.Stop();

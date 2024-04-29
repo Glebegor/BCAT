@@ -77,7 +77,10 @@ public class NodeController : Controller
     // }
     public void HandelRequest(HttpListenerContext context, NodeCL client)
     {
+        UpdateInfoController updateInfoController = new UpdateInfoController();
+        
         PingHandler(context, client);
+        updateInfoController.HandelRequest(context, client);
     }
     
 }
