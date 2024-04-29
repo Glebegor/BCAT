@@ -41,11 +41,11 @@ public abstract class Controller : IHeadController
             {
                 Console.WriteLine(node);
             }
-            // if (!client.nodesInNetwork.Contains(requestIp))
-            // {
-            //     client.nodesInNetwork.Add(requestIp);
-            //     
-            // }
+            if (!client.nodesInNetwork.Contains(requestIp))
+            {
+                client.nodesInNetwork.Add(requestIp);
+                
+            }
             Success<string> data = new Success<string>("Pong", 200, "Pong");
             SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
             
