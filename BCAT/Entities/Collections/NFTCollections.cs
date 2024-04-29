@@ -13,8 +13,6 @@ public class NFTCollections : NFT
 
     //search NFT by ID
 
-  
-
     public NFT GetNFTById(int tokenId)
     {
         return nfts.Find(nft => nft.TokenId == tokenId);
@@ -25,5 +23,15 @@ public class NFTCollections : NFT
     public List<NFT> GetNFTByOwner(string owner)
     {
         return nfts.FindAll(nft => nft.Owner == owner);
+    }
+
+    public void RemoveNFT(int tokenId)
+    {
+        nfts.RemoveAll(nft => nft.TokenId == tokenId);
+    }
+
+    public List<NFT> GetAllNFTs()
+    {
+        return nfts;
     }
 }

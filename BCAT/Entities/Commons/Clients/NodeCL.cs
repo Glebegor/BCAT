@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Text;
 using BCAT.API.Controllers;
 
 
@@ -8,6 +9,7 @@ public class NodeCL : Client
 {
     public string myIp = "";
     public List<string> nodesInNetwork;
+    public List<string> nodesInNetworkLastUpdate;
     public List<string> nodesMiningInNetwork;
     public List<string> miningsInNetwork;
     public List<string> walletsInNetwork;
@@ -25,33 +27,31 @@ public class NodeCL : Client
         blockchain = new Blockchain();
     }
     
-    static async void pingIpOfNode(HttpClient client, string ip)
+    async void pingIpOfNode(HttpClient client, string ip)
     {
         try
         {
-            HttpResponseMessage response = await client.GetAsync(ip);
+            HttpContent content = new StringContent(" {\"ip\":" + "\"" + myIp + "\"" + " } ", Encoding.UTF8, "text/plain");
+            
+            HttpResponseMessage response = await client.PostAsync(ip, content);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine(DateTime.Now + "; Node " + ip + " is not available; " + e.ToString());
         }
-        
-        
-        
     }
 
     // Update data from the network of blockchain
-    public async void UpdateData()
+    public async Task UpdateData()
     {
-        HttpClient client = new HttpClient();
         while (true)
         {
+            HttpClient client = new HttpClient();
+            await Task.Delay(2000);
             Console.WriteLine(DateTime.Now + "; " + "Updating data...");
-            await Task.Delay(5000);
-            
-            foreach (var nodeIp in nodesInNetwork)
+            nodesInNetworkLastUpdate = this.nodesInNetwork;
+            foreach (var nodeIp in nodesInNetworkLastUpdate)
             {
                 if (nodeIp != myIp)
                 {
@@ -65,6 +65,6 @@ public class NodeCL : Client
         Server server = new Server();
         myIp = server.host + ":" + server.port.ToString();
         UpdateData();
-        server.Start("node");
+        server.Start(this);
     }
 }
