@@ -37,14 +37,9 @@ public abstract class Controller : IHeadController
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
             requestIp = jsonObject.ip;
             Console.WriteLine("Request ip: " + requestIp);
-            foreach (string node in client.nodesInNetwork)
-            {
-                Console.WriteLine(node);
-            }
             if (!client.nodesInNetwork.Contains(requestIp))
             {
                 client.nodesInNetwork.Add(requestIp);
-                
             }
             Success<string> data = new Success<string>("Pong", 200, "Pong");
             SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
