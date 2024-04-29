@@ -4,6 +4,7 @@ using BCAT.Entities.Commons.Clients;
 using BCAT.Entities.Interfaces.Controllers;
 using BCAT.Entities.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BCAT.API.Controllers;
 
@@ -40,7 +41,8 @@ public class UpdateInfoController : IUpdateInfoController
         {
             Console.WriteLine(context.Request.Url.AbsolutePath);
 
-            string[] nodesInput;
+            string nodesInput;
+            string[] nodesInputs;
             string requestBody;
             
             using (StreamReader reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
@@ -49,15 +51,26 @@ public class UpdateInfoController : IUpdateInfoController
             }
             
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
-            nodesInput = jsonObject.data.ToObject<string[]>();
-            
-            foreach (string node in nodesInput)
+            if (jsonObject.data.GetType() == typeof(string))
             {
-                if (!client.nodesInNetwork.Contains(node))
+                nodesInput = jsonObject.data;
+                if (!client.nodesInNetwork.Contains(nodesInput))
                 {
-                    client.nodesInNetwork.Add(node);
+                    client.nodesInNetwork.Add(nodesInput);
                 }
             }
+            else if (jsonObject.data.GetType() == typeof(JArray))
+            {
+                nodesInputs = jsonObject.data.ToObject<string[]>();
+                foreach (string node in nodesInputs)
+                {
+                    if (!client.nodesInNetwork.Contains(node))
+                    {
+                        client.nodesInNetwork.Add(node);
+                    }
+                }
+            }
+
             Success<string> data = new Success<string>("Node updated", 200, "");
             SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
         }
