@@ -39,35 +39,20 @@ public class UpdateInfoController : IUpdateInfoController
 
         if (context.Request.Url.AbsolutePath == "/update/nodes" && context.Request.HttpMethod == "POST")
         {
-            Console.WriteLine(context.Request.Url.AbsolutePath);
-
-            string nodesInput;
-            string[] nodesInputs;
             string requestBody;
-            
+
             using (StreamReader reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
             {
                 requestBody = reader.ReadToEnd();
             }
-            
+
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
-            if (jsonObject.data.GetType() == typeof(string))
+            string nodeString = jsonObject.data;
+            foreach (var node in nodeString.Split(","))
             {
-                nodesInput = jsonObject.data;
-                if (!client.nodesInNetwork.Contains(nodesInput))
+                if (!client.nodesInNetwork.Contains(node))
                 {
-                    client.nodesInNetwork.Add(nodesInput);
-                }
-            }
-            else if (jsonObject.data.GetType() == typeof(JArray))
-            {
-                nodesInputs = jsonObject.data.ToObject<string[]>();
-                foreach (string node in nodesInputs)
-                {
-                    if (!client.nodesInNetwork.Contains(node))
-                    {
-                        client.nodesInNetwork.Add(node);
-                    }
+                    client.nodesInNetwork.Add(node);
                 }
             }
 

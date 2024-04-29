@@ -56,7 +56,7 @@ public class Server
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeController controller = new NodeController();
                 controller.HandelRequest(context, client);
             }
@@ -75,7 +75,7 @@ public class Server
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeMiningController controller = new NodeMiningController();
                 // controller.HandelRequest(context);
             }
@@ -94,7 +94,7 @@ public class Server
             while (httpListener.IsListening)
             {
                 HttpListenerContext context = httpListener.GetContext();
-                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url + "; " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
+                Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeMiningController controller = new NodeMiningController();
                 // controller.Ha(context);
             }
