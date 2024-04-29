@@ -13,7 +13,15 @@ namespace BCAT.API.Controllers;
 
 public abstract class Controller : IHeadController
 {
-    public void PingHandler(HttpListenerContext context)
+    public void PingHandler(HttpListenerContext context, NodeMiningCL client)
+    {
+       
+    }
+    public void PingHandler(HttpListenerContext context, MinerCL client)
+    {
+       
+    }
+    public void PingHandler(HttpListenerContext context, NodeCL client)
     {
         if (context.Request.HttpMethod == "POST" && context.Request.Url.AbsolutePath == "/ping")
         {
@@ -29,10 +37,10 @@ public abstract class Controller : IHeadController
             dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
             requestIp = jsonObject.ip;
             Console.WriteLine("Request ip: " + requestIp);
-            // foreach (string node in client.nodesInNetwork)
-            // {
-            //     Console.WriteLine(node);
-            // }
+            foreach (string node in client.nodesInNetwork)
+            {
+                Console.WriteLine(node);
+            }
             // if (!client.nodesInNetwork.Contains(requestIp))
             // {
             //     client.nodesInNetwork.Add(requestIp);
@@ -44,7 +52,6 @@ public abstract class Controller : IHeadController
         }
     }
 
-    public abstract void HandelRequest(HttpListenerContext context);
 
     public void SendResponse<T>(HttpListenerContext context, T responseBody, HttpStatusCode statusCode)
     {
@@ -73,9 +80,9 @@ public class NodeController : Controller
     // {
     //     this.client = client;
     // }
-    public override void HandelRequest(HttpListenerContext context)
+    public void HandelRequest(HttpListenerContext context, NodeCL client)
     {
-        PingHandler(context);
+        PingHandler(context, client);
     }
     
 }
@@ -87,9 +94,9 @@ public class NodeMiningController : Controller
     // {
     //     this.client = client;
     // }
-    public override void HandelRequest(HttpListenerContext context)
+    public void HandelRequest(HttpListenerContext context, NodeMiningCL client)
     {
-        PingHandler(context);
+        PingHandler(context, client);
     }
 
 }
@@ -101,8 +108,8 @@ public class MinerController : Controller
     // {
     //     this.client = client;
     // }
-    public override void HandelRequest(HttpListenerContext context)
+    public void HandelRequest(HttpListenerContext context, MinerCL client)
     {
-        PingHandler(context);
+        PingHandler(context, client);
     }
 }

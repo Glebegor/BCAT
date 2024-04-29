@@ -65,6 +65,6 @@ public class NodeCL : Client
         Server server = new Server();
         myIp = server.host + ":" + server.port.ToString();
         UpdateData();
-        server.Start("node");
+        server.Start(this);
     }
 }
