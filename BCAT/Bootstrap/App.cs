@@ -23,7 +23,7 @@ public class App
                 break;
             case 2:
                 Console.WriteLine("You are Mining Node");
-                client = new NodeMining();
+                client = new NodeMiningCL();
                 break;
             case 3:
                 Console.WriteLine("You are Miner");
