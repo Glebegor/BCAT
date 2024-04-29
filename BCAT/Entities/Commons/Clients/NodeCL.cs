@@ -48,9 +48,8 @@ public class NodeCL : Client
         while (true)
         {
             HttpClient client = new HttpClient();
-            await Task.Delay(5000);
+            await Task.Delay(2000);
             Console.WriteLine(DateTime.Now + "; " + "Updating data...");
-            Console.WriteLine(nodesInNetwork.Count);
             nodesInNetworkLastUpdate = this.nodesInNetwork;
             foreach (var nodeIp in nodesInNetworkLastUpdate)
             {
@@ -63,9 +62,9 @@ public class NodeCL : Client
     }
     public override void Run()
     {
-        Server server = new Server(this);
+        Server server = new Server();
         myIp = server.host + ":" + server.port.ToString();
         UpdateData();
-        server.Start("node");
+        server.Start(this);
     }
 }
