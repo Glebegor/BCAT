@@ -7,7 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4356377c-4343-4fc5-b283-be8eb965b1f4" name="Changes" comment="" />
+    <list default="true" id="4356377c-4343-4fc5-b283-be8eb965b1f4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BCAT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BCAT/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BCAT/Internal/Validators/BlockchainValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BCAT/Internal/Validators/BlockchainValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BCAT/obj/Debug/net9.0/BCAT.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BCAT/obj/Debug/net9.0/BCAT.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BCAT/obj/Debug/net9.0/BCAT.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/BCAT/obj/Debug/net9.0/BCAT.AssemblyInfoInputs.cache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,22 +32,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;danil/f&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "danil/f",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.smartKeys_rider",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/danamarisik/Library/Application Support/JetBrains/Rider2024.1/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/danamarisik/Library/Application Support/JetBrains/Rider2024.1/resharper-host/SourcesCache&quot;,
-      &quot;/Users/danamarisik/Library/Application Support/Symbols/src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/Users/danamarisik/Library/Application Support/JetBrains/Rider2024.1/resharper-host/DecompilerCache",
+      "/Users/danamarisik/Library/Application Support/JetBrains/Rider2024.1/resharper-host/SourcesCache",
+      "/Users/danamarisik/Library/Application Support/Symbols/src"
     ]
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -53,6 +61,9 @@
       <updated>1714167723553</updated>
       <workItem from="1714167725666" duration="296000" />
       <workItem from="1714168024473" duration="224000" />
+      <workItem from="1714343032124" duration="274000" />
+      <workItem from="1714343337972" duration="64000" />
+      <workItem from="1714509013017" duration="412000" />
     </task>
     <servers />
   </component>
