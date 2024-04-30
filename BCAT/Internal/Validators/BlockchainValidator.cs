@@ -21,17 +21,18 @@ public class BlockchainValidator
     }
 
 
-    private string PreviousHash;
-    public string Hash;
-    private string Transaction;
-    private int Index;
-
+    private string PreviousHash { get; set; }
+    public string Hash { get; set; }
+    private string Transaction { get; set; }
+    private int Index { get; set; }
+    public string Signature { get; set; }
     
-    public BlockchainValidator(string previousHash, string hash, string transaction)
+    public BlockchainValidator(string previousHash, string hash, string transaction, string signature)
     {
         previousHash = PreviousHash;
         transaction = Transaction;
         Index = 0;
+        Signature = signature;
         Hash = HashValidator();
     }
 
@@ -39,7 +40,8 @@ public class BlockchainValidator
     {
         using (SHA256 sha256 = SHA256.Create())
         {
-            byte[] inputBytes = Encoding.UTF8.GetBytes($"{Index}-{PreviousHash ?? ""} - {Transaction}");
+            string rawData = $"{Index}-{PreviousHash ?? ""} - {Transaction}-{Signature}";
+            byte[] inputBytes = Encoding.UTF8.GetBytes(rawData);
             byte[] hashBytes = sha256.ComputeHash(inputBytes);
 
             StringBuilder builder = new StringBuilder();
@@ -54,6 +56,24 @@ public class BlockchainValidator
 
     public bool ValidateBlock(Block block)
     {
+        using (var rsa = RSA.Create())
+        {
+            try
+            {
+                rsa.ImportSubjectPublicKeyInfo(Convert.FromBase64String(Signature), out _);
+
+                byte[] blockBytes = Encoding.UTF8.GetBytes($"{Index}-{PreviousHash ?? ""}-{Transaction}");
+                bool isSignatureValid = rsa.VerifyData(blockBytes, Convert.FromBase64String(Signature),
+                    HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+
+                return isSignatureValid;
+            }
+            catch (CryptographicException)
+            {
+                return false;
+            }
+        }
+        
         if (block.hash != HashValidator())
             return false;
         
@@ -62,4 +82,6 @@ public class BlockchainValidator
         
         return true;
     }
+
+
 }
