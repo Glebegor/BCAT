@@ -31,9 +31,9 @@ public class Program
         Console.WriteLine("Creating Wallets...");
 
         Console.WriteLine("Created wallet alice.");
-        Wallet alice_wallet = new Wallet("", "", "", new List<string>() {}, "123kjbepkj2h1po312", "213pjdopwq0u01y3213", 100, blockchain);
+        Wallet alice_wallet = new Wallet("", new List<string>() {}, "123kjbepkj2h1po312", "213pjdopwq0u01y3213", 100, blockchain);
         Console.WriteLine("Created wallet bob.");
-        Wallet bob_wallet = new Wallet("", "", "", new List<string>() { }, "qweqewef132f1peo[j[0efjw", "qwek1o2h3pduiwh1", 400, blockchain);
+        Wallet bob_wallet = new Wallet("", new List<string>() { }, "qweqewef132f1peo[j[0efjw", "qwek1o2h3pduiwh1", 400, blockchain);
 
         Console.WriteLine("Blockchain wallets:");
         blockchain.wallets.ForEach(wallet => Console.WriteLine(wallet.SerializerToJsonString()));

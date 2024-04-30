@@ -6,8 +6,6 @@ namespace BCAT.Entities.Commons;
 
 public class Wallet : IWallet
 {
-    public string username;
-    public string email;
     
     public string password;
     public List<string> secretPhrases; // 12 words
@@ -19,10 +17,9 @@ public class Wallet : IWallet
     public Blockchain blockchain;
     
     // Creating of the wallet
-    public Wallet(string username, string email, string password, List<string> secretPhrases, string publicKey, string privateKey, int balance, in Blockchain blockchain)
+    public Wallet(string password, List<string> secretPhrases, string publicKey, string privateKey, int balance, in Blockchain blockchain)
     {
-        this.username = username;
-        this.email = email;
+
         this.password = password;
         this.secretPhrases = secretPhrases;
         this.publicKey = publicKey;
@@ -55,7 +52,7 @@ public class Wallet : IWallet
     // Serializing wallet to json string
     public string SerializerToJsonString()
     {
-        string jsonString = $"{{ \"username\": \"{username}\", \"email\": \"{email}\", \"publicKey\": \"{publicKey}\", \"privateKey\": \"{privateKey}\", \"balance\": {balance}, \"id\": {id} }}";
+        string jsonString = $"{{\"publicKey\": \"{publicKey}\", \"privateKey\": \"{privateKey}\", \"balance\": {balance}, \"id\": {id} }}";
         return jsonString;
     }
 

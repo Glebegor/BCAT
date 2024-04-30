@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using BCAT.Entities.Commons;
 using BCAT.Entities.Commons.Clients;
 using BCAT.Entities.Interfaces.Controllers;
 using BCAT.Entities.Responses;
@@ -31,9 +32,26 @@ public class UpdateInfoController : IUpdateInfoController
     {
 
         NodesUpdateHandler(context, client);
+        BlockchainUpdateHandler(context, client);
         
     }
+    public void BlockchainUpdateHandler(HttpListenerContext context, NodeCL client)
+    {
+        if (context.Request.Url.AbsolutePath == "/update/blockchain" && context.Request.HttpMethod == "POST")
+        {
+            string requestBody;
 
+            using (StreamReader reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
+            {
+                requestBody = reader.ReadToEnd();
+            }
+
+            dynamic jsonObject = JsonConvert.DeserializeObject(requestBody);
+
+            Success<string> data = new Success<string>("Blockchain updated", 200, "");
+            SendResponse<Success<string>>(context, data, HttpStatusCode.OK);
+        }
+    }
     public void NodesUpdateHandler(HttpListenerContext context, NodeCL client)
     {
 

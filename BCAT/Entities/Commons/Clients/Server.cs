@@ -59,7 +59,7 @@ public class Server
                 Console.WriteLine(DateTime.Now + "; " + "Request received: " + context.Request.Url.AbsolutePath + " - " + context.Request.HttpMethod);
                 NodeController controller = new NodeController();
                 controller.HandelRequest(context, client);
-            }
+            }   
         });
         Console.ReadKey();
         
