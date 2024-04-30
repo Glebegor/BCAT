@@ -12,11 +12,10 @@ public class Wallet : IWallet
     public string publicKey;
     public string privateKey;
     public int balance;
-    
-    public Blockchain blockchain;
+
     
     // Creating of the wallet
-    public Wallet(string password, List<string> secretPhrases, string publicKey, string privateKey, int balance, in Blockchain blockchain)
+    public Wallet(string password, List<string> secretPhrases, string publicKey, string privateKey, int balance, in List<string> wallets)
     {
 
         this.password = password;
@@ -24,28 +23,12 @@ public class Wallet : IWallet
         this.publicKey = publicKey;
         this.privateKey = privateKey;
         this.balance = balance;
-        this.blockchain = blockchain;
 
-        this.blockchain.wallets.Add(this);
+        wallets.Add(publicKey);
         
     }
     
-    // Sending transaction to the network
-    public string SendTransaction(string receiver, int amount)
-    {
-        // Create a transaction
-        Transaction transaction = new Transaction();
-        transaction.CreateTransaction(this.publicKey, receiver, amount, this.privateKey);
-        
-        // Create a block
-        (Block block, string err) = this.blockchain.CreateBlock(transaction);
-        if (err != "")
-        {
-            return err;
-        }
-        
-        return "";
-    }
+    
     
     // Serializing wallet to json string
     public string SerializerToJsonString()

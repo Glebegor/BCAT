@@ -9,7 +9,6 @@ public class Blockchain : IBlockchain
 {
     public int amount;
     public List<Block> chain = new List<Block>();
-    public List<Wallet> wallets = new List<Wallet>();
     public int countBlocks = 0;
 
 

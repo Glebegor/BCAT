@@ -11,55 +11,12 @@ public class Program
 {
     public static void Main()
     {
-        // VERY BIG TEST
-        InitTest();
         
         // Client initialization
         App app = new App();
         App.SetClient();
         App.client.Run();
 
-    }
-    
-
-    // Test of local simulation
-    static public void InitTest()
-    {
-        Blockchain blockchain = new Blockchain();
-
-        // Wallet tests
-        Console.WriteLine("Creating Wallets...");
-
-        Console.WriteLine("Created wallet alice.");
-        Wallet alice_wallet = new Wallet("", new List<string>() {}, "123kjbepkj2h1po312", "213pjdopwq0u01y3213", 100, blockchain);
-        Console.WriteLine("Created wallet bob.");
-        Wallet bob_wallet = new Wallet("", new List<string>() { }, "qweqewef132f1peo[j[0efjw", "qwek1o2h3pduiwh1", 400, blockchain);
-
-        Console.WriteLine("Blockchain wallets:");
-        blockchain.wallets.ForEach(wallet => Console.WriteLine(wallet.SerializerToJsonString()));
-        
-        // Transaction tests
-        Console.WriteLine("\n" + "Transaction 1.");
-        alice_wallet.SendTransaction(bob_wallet.publicKey, 50);
-        Console.WriteLine("Transaction 2.");
-        bob_wallet.SendTransaction(alice_wallet.publicKey, 150);
-        
-        
-        Console.WriteLine("Blockchain after transactions:");
-        blockchain.chain.ForEach(block => Console.WriteLine(block.SerializerToJsonString()));
-        Console.WriteLine("Blockchain wallets after transactions:");
-        blockchain.wallets.ForEach(wallet => Console.WriteLine(wallet.SerializerToJsonString()));
-        
-        // Validate tests
-        BlockchainValidator blockchainValidator = new BlockchainValidator();
-        
-        Console.WriteLine("Validating Blockchain...");
-        Console.WriteLine("Without changes->");
-        Console.WriteLine(BlockchainValidator.ValidateBlockchain(blockchain) ? "BLOCKCHAIN IS VALID" : "BLOCKCHAIN IS NOT VALID");
-        
-        Console.WriteLine("With changes->");
-        blockchain.chain[1].prevHash = "123";        
-        Console.WriteLine(BlockchainValidator.ValidateBlockchain(blockchain) ? "BLOCKCHAIN IS VALID" : "BLOCKCHAIN IS NOT VALID");
     }
 }
 
