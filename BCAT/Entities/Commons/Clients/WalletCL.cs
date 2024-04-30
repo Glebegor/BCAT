@@ -10,6 +10,14 @@ namespace BCAT.Entities.Commons.Clients
     {
         Wallet wallet;
 
+        public WalletCL()
+        {
+            nodesInNetwork = new List<string>();
+            // nodesMiningInNetwork = new List<string>();
+            // miningsInNetwork = new List<string>();
+            walletsInNetwork = new List<string>();
+            // blockchain = new Blockchain();
+        }
         public override void Run()
         {
             Console.WriteLine("1. Create wallet");
@@ -37,6 +45,7 @@ namespace BCAT.Entities.Commons.Clients
         public void CreateWallet()
         {
             List<string> randomWords = GenerateRandomWords();
+            string publicKeyString, privateKeyString;
 
             Console.WriteLine("Your secret phrases: " + string.Join(" ", randomWords));
             Console.WriteLine("Please save your secret phrases in a safe place. You will need them to recover your wallet.");
@@ -48,15 +57,9 @@ namespace BCAT.Entities.Commons.Clients
             byte[] wordsBytes = Encoding.UTF8.GetBytes(wordsString);
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] wordAndPass = wordsBytes.Concat(passwordBytes).ToArray();
+            
+            wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0, walletsInNetwork);
 
-            // Derive the private key using a hash function
-            byte[] privateKeyBytes = DerivePrivateKey(wordAndPass);
-
-            // Store or use the private key
-            // For example:
-            // wallet.PrivateKey = privateKeyBytes;
-
-            Console.WriteLine("Wallet created successfully.");
         }
 
         public List<string> GenerateRandomWords()
@@ -104,15 +107,6 @@ namespace BCAT.Entities.Commons.Clients
             }
 
             return password;
-        }
-
-        public byte[] DerivePrivateKey(byte[] data)
-        {
-            // Derive the private key using a hash function
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                return sha256.ComputeHash(data);
-            }
         }
 
         public void LoadWallet()
