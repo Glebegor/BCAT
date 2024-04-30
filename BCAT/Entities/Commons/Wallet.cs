@@ -12,7 +12,6 @@ public class Wallet : IWallet
     public string publicKey;
     public string privateKey;
     public int balance;
-    public int id;
     
     public Blockchain blockchain;
     
@@ -27,7 +26,6 @@ public class Wallet : IWallet
         this.balance = balance;
         this.blockchain = blockchain;
 
-        this.id = this.blockchain.wallets.Count+1;
         this.blockchain.wallets.Add(this);
         
     }
@@ -52,7 +50,7 @@ public class Wallet : IWallet
     // Serializing wallet to json string
     public string SerializerToJsonString()
     {
-        string jsonString = $"{{\"publicKey\": \"{publicKey}\", \"privateKey\": \"{privateKey}\", \"balance\": {balance}, \"id\": {id} }}";
+        string jsonString = $"{{\"publicKey\": \"{publicKey}\"}}";
         return jsonString;
     }
 
