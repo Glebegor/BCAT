@@ -11,7 +11,6 @@ public abstract class Client
     public List<string> nodesInNetwork;
     public List<string> nodesMiningInNetwork;
     public List<string> miningsInNetwork;
-    public List<string> walletsInNetwork;
     public Blockchain blockchain;
     
     // Initializing of Node blockchain part
@@ -21,7 +20,6 @@ public abstract class Client
         nodesInNetwork.Add(myIp);
         nodesMiningInNetwork = new List<string>();
         miningsInNetwork = new List<string>();
-        walletsInNetwork = new List<string>();
         blockchain = new Blockchain();
     }
 

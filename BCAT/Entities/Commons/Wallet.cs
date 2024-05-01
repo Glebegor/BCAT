@@ -15,7 +15,7 @@ public class Wallet : IWallet
 
     
     // Creating of the wallet
-    public Wallet(string password, List<string> secretPhrases, string publicKey, string privateKey, int balance, in List<string> wallets)
+    public Wallet(string password, List<string> secretPhrases, string publicKey, string privateKey, int balance)
     {
 
         this.password = password;
@@ -24,7 +24,6 @@ public class Wallet : IWallet
         this.privateKey = privateKey;
         this.balance = balance;
 
-        wallets.Add(publicKey);
         
     }
     

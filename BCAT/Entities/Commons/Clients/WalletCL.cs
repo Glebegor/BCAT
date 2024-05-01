@@ -15,7 +15,6 @@ namespace BCAT.Entities.Commons.Clients
             nodesInNetwork = new List<string>();
             // nodesMiningInNetwork = new List<string>();
             // miningsInNetwork = new List<string>();
-            walletsInNetwork = new List<string>();
             // blockchain = new Blockchain();
         }
         public override void Run()
@@ -52,8 +51,16 @@ namespace BCAT.Entities.Commons.Clients
                     case "help":
                         Console.WriteLine("Commands:");
                         break;
-                    case "-getInfo":
-                        
+                    case "-getWallet":
+                        Console.WriteLine("Public key: " + wallet.publicKey);
+                        Console.WriteLine("Balance: " + wallet.balance);
+                        break;
+                    case "-getPrivateKey":
+                        Console.WriteLine("Private key: " + wallet.privateKey);
+                        break;
+                    case "-getPassword":
+                        Console.WriteLine("Password: " + wallet.password);
+                        break;
                     default:
                         Console.WriteLine("Invalid command. Type 'help' for a list of commands.");
                         break;
@@ -85,7 +92,8 @@ namespace BCAT.Entities.Commons.Clients
             publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyBytes);
 
             // Create Wallet object
-            Wallet wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0, walletsInNetwork);
+            Wallet wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0);
+            this.wallet = wallet;
         }
 
 
