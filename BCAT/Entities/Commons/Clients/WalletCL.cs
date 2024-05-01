@@ -15,7 +15,6 @@ namespace BCAT.Entities.Commons.Clients
             nodesInNetwork = new List<string>();
             // nodesMiningInNetwork = new List<string>();
             // miningsInNetwork = new List<string>();
-            walletsInNetwork = new List<string>();
             // blockchain = new Blockchain();
         }
         public override void Run()
@@ -40,6 +39,35 @@ namespace BCAT.Entities.Commons.Clients
                     Console.WriteLine("Invalid choice");
                     break;
             }
+
+            Console.WriteLine("Wallet created successfully.");
+            Console.WriteLine("Enter commands to interact with the wallet. Type 'help' for a list of commands.");
+            while (true)
+            {
+                string command;
+                command = Console.ReadLine();
+                switch (command)
+                {
+                    case "help":
+                        Console.WriteLine("Commands:");
+                        break;
+                    case "-getWallet":
+                        Console.WriteLine("Public key: " + wallet.publicKey);
+                        Console.WriteLine("Balance: " + wallet.balance);
+                        break;
+                    case "-getPrivateKey":
+                        Console.WriteLine("Private key: " + wallet.privateKey);
+                        break;
+                    case "-getPassword":
+                        Console.WriteLine("Password: " + wallet.password);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid command. Type 'help' for a list of commands.");
+                        break;
+                }
+                
+
+            }
         }
 
         public void CreateWallet()
@@ -52,14 +80,32 @@ namespace BCAT.Entities.Commons.Clients
 
             string password = GetPassword();
 
-            // Convert the random words and password to bytes
-            string wordsString = string.Join(" ", randomWords);
-            byte[] wordsBytes = Encoding.UTF8.GetBytes(wordsString);
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] wordAndPass = wordsBytes.Concat(passwordBytes).ToArray();
-            
-            wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0, walletsInNetwork);
+            // Generate private key
+            byte[] privateKeyBytes;
+            using (ECDsa ecdsa = ECDsa.Create())
+            {
+                privateKeyBytes = ecdsa.ExportPkcs8PrivateKey();
+            }
+            privateKeyString = Convert.ToBase64String(privateKeyBytes);
 
+            // Generate public key from private key
+            publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyBytes);
+
+            // Create Wallet object
+            Wallet wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0);
+            this.wallet = wallet;
+        }
+
+
+        public string GeneratePublicKeyFromPrivateKey(byte[] privateKeyBytes)
+        {
+            using (ECDsa ecdsa = ECDsa.Create())
+            {
+                ecdsa.ImportPkcs8PrivateKey(privateKeyBytes, out _);
+
+                byte[] publicKeyBytes = ecdsa.ExportSubjectPublicKeyInfo();
+                return Convert.ToBase64String(publicKeyBytes);
+            }
         }
 
         public List<string> GenerateRandomWords()
