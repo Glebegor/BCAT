@@ -57,11 +57,35 @@ namespace BCAT.Entities.Commons.Clients
             byte[] wordsBytes = Encoding.UTF8.GetBytes(wordsString);
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] wordAndPass = wordsBytes.Concat(passwordBytes).ToArray();
-            
-            wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0, walletsInNetwork);
 
+            // Generate private key
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] privateKeyBytes = sha256.ComputeHash(wordAndPass);
+                privateKeyString = Convert.ToBase64String(privateKeyBytes);
+            }
+
+            // Generate public key (assuming elliptic curve cryptography)
+            // You need to implement the logic for generating public key from private key
+            publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyString);
+
+            // Create Wallet object
+            Wallet wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0, walletsInNetwork);
         }
 
+        public string GeneratePublicKeyFromPrivateKey(string privateKey)
+        {
+            using (ECDsa ecdsa = ECDsa.Create())
+            {
+                // Import private key
+                byte[] privateKeyBytes = Convert.FromBase64String(privateKey);
+                ecdsa.ImportPkcs8PrivateKey(privateKeyBytes, out _);
+
+                // Get public key
+                byte[] publicKeyBytes = ecdsa.ExportSubjectPublicKeyInfo();
+                return Convert.ToBase64String(publicKeyBytes);
+            }
+        }
         public List<string> GenerateRandomWords()
         {
             List<string> randomWords = new List<string>();
