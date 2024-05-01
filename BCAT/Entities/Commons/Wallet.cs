@@ -26,9 +26,6 @@ public class Wallet : IWallet
 
         
     }
-    
-    
-    
     // Serializing wallet to json string
     public string SerializerToJsonString()
     {

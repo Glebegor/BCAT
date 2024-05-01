@@ -65,7 +65,7 @@ namespace BCAT.Entities.Commons.Clients
                         Console.WriteLine("Invalid command. Type 'help' for a list of commands.");
                         break;
                 }
-                
+
 
             }
         }
@@ -74,68 +74,52 @@ namespace BCAT.Entities.Commons.Clients
         {
             Console.WriteLine("Enter your 12 words separated by spaces: ");
             List<string> secretPhrases = Console.ReadLine().Split(' ').ToList();
-            
-            Console.WriteLine("Enter your password: ");
-            string password = GetPassword();
-            
-            // Generate private key
-            byte[] privateKeyBytes;
-            using (ECDsa ecdsa = ECDsa.Create())
-            {
-                privateKeyBytes = ecdsa.ExportPkcs8PrivateKey();
-            }
-            string privateKeyString = Convert.ToBase64String(privateKeyBytes);
 
-            // Generate public key from private key
-            string publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyBytes);
+            string password = GetPassword();
+
+            // Generate private key
+            string wordsString = string.Join(" ", secretPhrases);
+            byte[] wordsBytes = Encoding.UTF8.GetBytes(wordsString);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            byte[] wordAndPass = wordsBytes.Concat(passwordBytes).ToArray();
+
+             string publicKeyString, privateKeyString;
+            // Generate private key
+
+            // Generate public key
+            
 
             if (!IsRealWallet(password, secretPhrases, publicKeyString, privateKeyString))
             {
                 Console.WriteLine("Invalid wallet. Please check your password and secret phrases.");
             }
-            
+
             // Create Wallet object
-            Wallet wallet = new Wallet(password, secretPhrases, publicKeyString, privateKeyString, 0);
-            this.wallet = wallet;
+            wallet = new Wallet(password, secretPhrases, publicKeyString, privateKeyString, 0);
         }
         public void CreateWallet()
         {
             List<string> randomWords = GenerateRandomWords();
-            string publicKeyString, privateKeyString;
 
             Console.WriteLine("Your secret phrases: " + string.Join(" ", randomWords));
             Console.WriteLine("Please save your secret phrases in a safe place. You will need them to recover your wallet.");
-
+            
             string password = GetPassword();
+            
+            string wordsString = string.Join(" ", randomWords);
+            byte[] wordsBytes = Encoding.UTF8.GetBytes(wordsString);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            byte[] wordAndPass = wordsBytes.Concat(passwordBytes).ToArray();
 
+            string publicKeyString, privateKeyString;
             // Generate private key
-            byte[] privateKeyBytes;
-            using (ECDsa ecdsa = ECDsa.Create())
-            {
-                privateKeyBytes = ecdsa.ExportPkcs8PrivateKey();
-            }
-            privateKeyString = Convert.ToBase64String(privateKeyBytes);
 
-            // Generate public key from private key
-            publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyBytes);
+            // Generate public key
 
             // Create Wallet object
-            Wallet wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0);
-            this.wallet = wallet;
+            wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0);
         }
-
-
-        public string GeneratePublicKeyFromPrivateKey(byte[] privateKeyBytes)
-        {
-            using (ECDsa ecdsa = ECDsa.Create())
-            {
-                ecdsa.ImportPkcs8PrivateKey(privateKeyBytes, out _);
-
-                byte[] publicKeyBytes = ecdsa.ExportSubjectPublicKeyInfo();
-                return Convert.ToBase64String(publicKeyBytes);
-            }
-        }
-
+        
         public List<string> GenerateRandomWords()
         {
             List<string> randomWords = new List<string>();
@@ -154,7 +138,6 @@ namespace BCAT.Entities.Commons.Clients
 
             return randomWords;
         }
-
         public string GetPassword()
         {
             string password = "";
@@ -164,7 +147,7 @@ namespace BCAT.Entities.Commons.Clients
                 ConsoleKeyInfo key = Console.ReadKey(true); // Read key without displaying it
                 if (key.Key == ConsoleKey.Enter)
                 {
-                    Console.WriteLine(); // Move to the next line after user presses Enter
+                    Console.WriteLine(); // Move to the next line after the user presses Enter
                     break; // Break the loop when Enter is pressed
                 }
                 else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
@@ -184,13 +167,17 @@ namespace BCAT.Entities.Commons.Clients
             return password;
         }
 
+        
         public bool IsRealWallet(string password, List<string> secretPhrases, string publicKey, string privateKey)
         {
+            // You need to implement the logic to verify if the wallet is real
+            // This might involve checking against some stored data or blockchain
             bool res = true;
-            
+
             // Check if the wallet is real
-            
+
             return res;
         }
+        
     }
 }
