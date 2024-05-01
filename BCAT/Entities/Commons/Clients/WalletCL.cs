@@ -40,6 +40,27 @@ namespace BCAT.Entities.Commons.Clients
                     Console.WriteLine("Invalid choice");
                     break;
             }
+
+            Console.WriteLine("Wallet created successfully.");
+            Console.WriteLine("Enter commands to interact with the wallet. Type 'help' for a list of commands.");
+            while (true)
+            {
+                string command;
+                command = Console.ReadLine();
+                switch (command)
+                {
+                    case "help":
+                        Console.WriteLine("Commands:");
+                        break;
+                    case "-getInfo":
+                        
+                    default:
+                        Console.WriteLine("Invalid command. Type 'help' for a list of commands.");
+                        break;
+                }
+                
+
+            }
         }
 
         public void CreateWallet()
@@ -52,40 +73,33 @@ namespace BCAT.Entities.Commons.Clients
 
             string password = GetPassword();
 
-            // Convert the random words and password to bytes
-            string wordsString = string.Join(" ", randomWords);
-            byte[] wordsBytes = Encoding.UTF8.GetBytes(wordsString);
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            byte[] wordAndPass = wordsBytes.Concat(passwordBytes).ToArray();
-
             // Generate private key
-            using (SHA256 sha256 = SHA256.Create())
+            byte[] privateKeyBytes;
+            using (ECDsa ecdsa = ECDsa.Create())
             {
-                byte[] privateKeyBytes = sha256.ComputeHash(wordAndPass);
-                privateKeyString = Convert.ToBase64String(privateKeyBytes);
+                privateKeyBytes = ecdsa.ExportPkcs8PrivateKey();
             }
+            privateKeyString = Convert.ToBase64String(privateKeyBytes);
 
-            // Generate public key (assuming elliptic curve cryptography)
-            // You need to implement the logic for generating public key from private key
-            publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyString);
+            // Generate public key from private key
+            publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyBytes);
 
             // Create Wallet object
             Wallet wallet = new Wallet(password, randomWords, publicKeyString, privateKeyString, 0, walletsInNetwork);
         }
 
-        public string GeneratePublicKeyFromPrivateKey(string privateKey)
+
+        public string GeneratePublicKeyFromPrivateKey(byte[] privateKeyBytes)
         {
             using (ECDsa ecdsa = ECDsa.Create())
             {
-                // Import private key
-                byte[] privateKeyBytes = Convert.FromBase64String(privateKey);
                 ecdsa.ImportPkcs8PrivateKey(privateKeyBytes, out _);
 
-                // Get public key
                 byte[] publicKeyBytes = ecdsa.ExportSubjectPublicKeyInfo();
                 return Convert.ToBase64String(publicKeyBytes);
             }
         }
+
         public List<string> GenerateRandomWords()
         {
             List<string> randomWords = new List<string>();
