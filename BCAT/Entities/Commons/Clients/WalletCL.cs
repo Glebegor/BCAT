@@ -70,6 +70,34 @@ namespace BCAT.Entities.Commons.Clients
             }
         }
 
+        public void LoadWallet()
+        {
+            Console.WriteLine("Enter your 12 words separated by spaces: ");
+            List<string> secretPhrases = Console.ReadLine().Split(' ').ToList();
+            
+            Console.WriteLine("Enter your password: ");
+            string password = GetPassword();
+            
+            // Generate private key
+            byte[] privateKeyBytes;
+            using (ECDsa ecdsa = ECDsa.Create())
+            {
+                privateKeyBytes = ecdsa.ExportPkcs8PrivateKey();
+            }
+            string privateKeyString = Convert.ToBase64String(privateKeyBytes);
+
+            // Generate public key from private key
+            string publicKeyString = GeneratePublicKeyFromPrivateKey(privateKeyBytes);
+
+            if (!IsRealWallet(password, secretPhrases, publicKeyString, privateKeyString))
+            {
+                Console.WriteLine("Invalid wallet. Please check your password and secret phrases.");
+            }
+            
+            // Create Wallet object
+            Wallet wallet = new Wallet(password, secretPhrases, publicKeyString, privateKeyString, 0);
+            this.wallet = wallet;
+        }
         public void CreateWallet()
         {
             List<string> randomWords = GenerateRandomWords();
@@ -114,6 +142,7 @@ namespace BCAT.Entities.Commons.Clients
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
 
+            // Generate 12 random words
             for (int i = 0; i < 12; i++)
             {
                 int wordLength = random.Next(5, 11);
@@ -155,9 +184,13 @@ namespace BCAT.Entities.Commons.Clients
             return password;
         }
 
-        public void LoadWallet()
+        public bool IsRealWallet(string password, List<string> secretPhrases, string publicKey, string privateKey)
         {
-            // Implementation for loading a wallet
+            bool res = true;
+            
+            // Check if the wallet is real
+            
+            return res;
         }
     }
 }
