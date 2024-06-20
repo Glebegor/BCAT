@@ -1,6 +1,7 @@
 # BCAT - Blockchain Anonymous Token
 
 ## Description
+BCAT is a test blockchain to understand web 3.0 technology.
 BCAT has 6 "I't will be":
 - It will be public blockchain.
 - It will be anonymous.
